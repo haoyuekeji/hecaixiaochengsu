@@ -1,0 +1,51 @@
+<!--pages/sure/sure.wxml-->
+<view class="container">
+    <view class="address" bindtap="address">
+        <view class="img">
+            <image src="../../images/icon/colour bar.png"></image>
+        </view>
+        <view class="address-con">
+            <view class="address-con-top">
+                <text>收货人：{{userName}}</text>
+                <text>电话：{{telNumber}}</text>
+            </view>
+            <view class="address-con-footer">
+                <text>收货地址：{{address}}</text>
+            </view>
+        </view>
+        <image src="../../images/icon/come.png" class='address-img'></image>
+    </view>
+    <view class="body">
+        <block wx:for="{{payList}}" wx:key="index">
+            <view class="con">
+                <view class="con-left">
+                    <image src="{{item.imgurl}}" mode="widthFix"></image>
+                </view>
+                <view class="con-right">
+                    <view class='con-right-text'>{{item.con}}</view>
+                    <view class="con-right-price">
+                        <view class="con-right-price-con">
+                            <text>￥</text>{{item.priceNew}}
+                        </view>
+                        <view class="old-price" wx:if="{{item.priceOld}}">￥{{item.priceOld}}</view>
+                        <view id="nums">x{{item.nums}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="guige padding" bindtap="ChooseGuige">
+                <view class="price-con">配送方式</view>
+                <view class="price-con">
+                    <text> 快递 {{item.deliverPrice}}</text>
+                </view>
+            </view>
+        </block>
+    </view>
+    <view class="footer">
+        <view class="footer-price">实付：
+            <text>￥</text>
+            <label>{{priceAll}}</label>
+        </view>
+        <view class="footer-submit" bindtap='pay'>确认支付</view>
+    </view>
+    <view class='logo-text'>@皓月科技提供技术支持</view>
+</view>

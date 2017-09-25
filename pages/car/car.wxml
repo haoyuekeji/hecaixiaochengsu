@@ -1,0 +1,56 @@
+<view class="container">
+    <view class="car-kong" wx:if="{{CarShow}}">
+        <image src="../../images/icon/shopping-car.png"></image>
+        <view>您的购车竟然是空的，快去购买吧！</view>
+    </view>
+    <block wx:for="{{cons}}" wx:key="index" data-id="{{item.id}}">
+        <scroll-view class="car" scroll-x="true" scroll-into-view="{{id}}" scroll-with-animation="true" bindtap='link'>
+            <view class="car-left" data-index="{{index}}" id="del">
+                <icon type="success" size="23" color="#eb6877" wx:if="{{item.Seclect}}" bindtap="SeclectList" data-index="{{index}}" />
+                <icon type="circle" size="23" color="#eb6877" bindtap="test" data-index="{{index}}" bindtap="SeclectList" />
+            </view>
+            <view class="car-img">
+                <image src="{{item.imgurl}}"></image>
+            </view>
+
+            <view class="car-con">
+                <block>
+                    <text id="car-con-text">{{item.con}}</text>
+                </block>
+                <!-- <view class='details'>
+                    <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
+                    <text>￥{{item.priceNew}}</text>
+                </view> -->
+                <view class="car-price">
+                    <text>￥</text>{{item.price}}
+                </view>
+                <view class="car-num">
+                    <view style="border-left:{{style}};color:{{item.color}}" bindtap="NumJian" data-index="{{index}}">-</view>
+                    <view>{{item.nums}}</view>
+                    <view bindtap="NumJia" data-index="{{index}}">+</view>
+                </view>
+            </view>
+            <view class="car-right" bindtap="delet" data-index="{{index}}" data-id="{{item.id}}" bindscroll='scroll'>
+                <view data-index="{{index}}" data-id="{{item.id}}">删除</view>
+            </view>
+        </scroll-view>
+    </block>
+
+    <view class="footer">
+        <view class="foot-left">
+            <view class="footer-left-con">
+                <icon type="success" size="23" color="#eb6877" wx:if="{{SeclectAll}}" bindtap="SeclectAlllist" />
+                <icon type="circle" size="23" color="#eb6877" bindtap="SeclectAlllist" />
+            </view>
+            <text>全选</text>
+        </view>
+        <view class="all">
+            合计:
+            <text>￥</text>
+            <text class='price'>{{price}}</text>
+        </view>
+        <view class="clear" bindtap='buy'>
+            <text>结算（{{priceAll}}）</text>
+        </view>
+    </view>
+</view>

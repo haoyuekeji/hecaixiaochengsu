@@ -1,0 +1,97 @@
+/* @import "../index/index.wxss"; */
+
+page {
+    background: #e6e6e6;
+    font-family: "SourceHanSansCN-Medium";
+    height: 100%;
+}
+
+.body {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 15rpx;
+    /* padding-top: 30rpx; */
+}
+
+.left {
+    height: 100%;
+    background: #e6e6e6;
+    width: 120rpx;
+    text-align: center;
+    line-height: 120rpx;
+    border-right: 1rpx solid #d4d4d4;
+    margin-top: 15rpx;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.body-left view {
+    height: 120rpx;
+    width: 100%;
+    font-size: 30rpx;
+    border-bottom: 1rpx solid #d4d4d4;
+}
+
+.background {
+    background: #fff;
+}
+
+.block {
+    height: 100%;
+    width: 630rpx;
+    display: flex;
+    padding: 0 10rpx;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-self: flex-end;
+    box-sizing: border-box;
+    margin-left: 120rpx;
+}
+
+navigator {
+    width: 270rpx;
+    margin-bottom: 15rpx;
+    display: inline-block;
+    padding: 15rpx;
+    background: #fff;
+    margin-right: 5rpx;
+}
+
+.body-con-img {
+    width: 270rpx;
+    height: 270rpx;
+}
+
+.con-text {
+    height: 60rpx;
+    width: 100%;
+    font-size: 25rpx;
+    color: #333;
+    line-height: 30rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.footer-left {
+    width: 50%;
+    float: left;
+    color: #f70000;
+    font-size: 30rpx;
+    font-weight: 500;
+    margin-top: 15rpx;
+}
+
+.footer-left text {
+    font-size: 25rpx;
+    float: left;
+}
+
+.hint {
+    margin-left: 210rpx;
+}

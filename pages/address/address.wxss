@@ -1,0 +1,27 @@
+/* address.wxss */
+
+.con {
+    height: 60rpx;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30rpx;
+    line-height: 30rpx;
+    border-bottom: 1rpx solid #f2f2f2;
+}
+
+text {
+    height: 50rpx;
+    text-align: center;
+    flex: 1;
+    line-height: 50rpx;
+}
+
+picker, input {
+    flex: 4;
+}
+picker{
+    height: 100%;
+    width: 100%;
+    line-height: 100%;
+}

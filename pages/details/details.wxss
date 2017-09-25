@@ -1,0 +1,391 @@
+page {
+    font-family: "SourceHanSansCN-Medium";
+}
+
+swiper {
+    width: 100%;
+    height: 750rpx;
+}
+
+.slide-image {
+    width: 100%;
+}
+
+.padding {
+    padding: 0 30rpx;
+}
+
+.body {
+    font-size: 25rpx;
+    margin-top: 20rpx;
+}
+
+.con, .price, .guige {
+    height: 80rpx;
+    margin-top: 10rpx;
+    font-weight: bold;
+    display: flex;
+}
+
+.guige {
+    border: 1rpx solid #f2f2f2;
+}
+
+.price {
+    height: 50rpx;
+    color: #f40000;
+    font-size: 30rpx;
+}
+
+.price-con {
+    width: 200rpx;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.nonetext, .price-num {
+    color: #ccc;
+    margin-left: 20rpx;
+    font-size: 20rpx;
+}
+
+.price-num {
+    margin-left: 0;
+    margin-top: 10rpx;
+}
+
+.guige {
+    justify-content: space-between;
+    line-height: 80rpx;
+}
+
+.guige .price-con {
+    width: auto;
+    font-size: 30rpx;
+}
+
+.price-con image {
+    height: 22rpx;
+    width: 12rpx;
+    margin-top: 35rpx;
+}
+
+.details {
+    height: 80rpx;
+    width: 100%;
+    font-size: 35rpx;
+    text-align: center;
+    line-height: 80rpx;
+}
+
+.cover {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+}
+
+.guige-details {
+    height: 60%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+}
+
+.guige-details icon {
+    position: absolute;
+    right: 30rpx;
+    top: 15rpx;
+}
+
+.img {
+    height: 200rpx;
+    width: 200rpx;
+    background: #fff;
+    padding: 5rpx;
+    box-shadow: 2rpx 2rpx 10rpx 2rpx #999;
+    margin: -35rpx 0 0 30rpx;
+    float: left;
+}
+
+.img image {
+    width: 200rpx;
+}
+
+.cover-details {
+    height: 155rpx;
+    width: 400rpx;
+    float: left;
+    margin-left: 30rpx;
+}
+
+.cover-details view {
+    margin-top: 20rpx;
+    font-size: 24rpx;
+    color: #333;
+}
+
+.cover-details .cover-price {
+    color: #f40000;
+}
+
+.clear {
+    clear: both;
+}
+
+label {
+    font-size: 28rpx;
+    font-weight: bold;
+}
+
+.chima {
+    margin-top: 20rpx;
+    padding: 0 30rpx;
+    font-size: 30rpx;
+}
+
+.chima-details {
+    color: #666;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.chima-details-view {
+    height: 40rpx;
+    width: 100rpx;
+    background: #f0f0f0;
+    border-radius: 20rpx;
+    line-height: 40rpx;
+    text-align: center;
+    padding: 5rpx 20rpx;
+    margin-right: 20rpx;
+    margin-top: 20rpx;
+}
+
+.number {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30rpx;
+    margin-top: 20rpx;
+}
+
+.number-num {
+    display: flex;
+    font-size: 35rpx;
+    justify-content: center;
+}
+
+.number-num view {
+    height: 50rpx;
+    width: 50rpx;
+    line-height: 50rpx;
+    text-align: center;
+    border: 1rpx solid #ccc;
+    border-left: none;
+}
+
+.cover-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 30rpx;
+    text-align: center;
+    line-height: 50rpx;
+    position: absolute;
+    bottom: 20rpx;
+    left: 0;
+    width: 690rpx;
+    height: 80rpx;
+    font-size: 25rpx;
+}
+
+.cover-footer view {
+    margin-left: 30rpx;
+}
+
+.details-right-list {
+    width: 700rpx;
+    height: 100rpx;
+    display: flex;
+    justify-content: space-around;
+    margin-left: 20rpx;
+}
+
+.details-right-list text {
+    height: 50rpx;
+    padding: 0 15rpx;
+    margin-top: 25rpx;
+    text-align: center;
+    line-height: 50rpx;
+    border-radius: 30rpx;
+    color: #333;
+}
+
+.one {
+    background: #f40000;
+    color: #fff;
+}
+
+.two {
+    background: #f54949;
+}
+
+.three {
+    background: #f59393;
+}
+
+.four {
+    background: #cdcdcd;
+}
+
+.details-right-con {
+    height: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.details-right-con text {
+    color: #8f8f8f;
+    display: block;
+    padding: 300rpx 0;
+    font-size: 60rpx;
+}
+
+.cons-img {
+    width: 100%;
+    padding-bottom: 110rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cons-img text {
+    color: #999;
+    align-self: center;
+    display: block;
+    margin-top: 15rpx;
+}
+
+.cons-img image {
+    width: "100%";
+    margin-bottom: 15rpx;
+}
+
+.footer {
+    height: 110rpx;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    line-height: 130rpx;
+    display: flex;
+    justify-content: space-between;
+    z-index: 999;
+}
+
+.car {
+    width: 130rpx;
+    position: relative;
+}
+
+.footer image {
+    height: 60rpx;
+    width: 60rpx;
+    margin-left: 20rpx;
+}
+
+.dian {
+    height: 12rpx;
+    width: 12rpx;
+    background: #f40000;
+    border-radius: 10rpx;
+    position: absolute;
+    left: 75rpx;
+    top: 15rpx;
+}
+
+.footer-right {
+    height: 110rpx;
+    width: 450rpx;
+    margin-top: 25rpx;
+    margin-right: 30rpx;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    font-size: 30rpx;
+    text-align: center;
+}
+
+.footer-right-car, .footer-right-buy {
+    height: 80rpx;
+    width: 200rpx;
+    font-size: 30rpx;
+    border-radius: 50rpx;
+    line-height: 80rpx;
+    border: 1rpx solid rgb(255, 64, 129);
+    color: #e60012;
+}
+
+.footer-right-buy {
+    border:1rpx solid #f40000;
+}
+
+.footer-right .footer-right-car, .footer-right .footer-right-buy {
+    height: 60rpx;
+    width: 200rpx;
+    border-radius: 50rpx;
+    line-height: 60rpx;
+    background: rgb(255, 64, 129);
+    color: #fff;
+}
+
+.footer-right .footer-right-buy {
+    background: #f40000;
+}
+
+.success {
+    height: 100rpx;
+    width: 300rpx;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    line-height: 100rpx;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -150rpx;
+    margin-top: -50rpx;
+}
+
+button {
+    height: 100rpx;
+    widows: 300rpx;
+    font-size: 35rpx;
+    background: #fff;
+    opacity: 0;
+}
+
+.kefu {
+    height: 50rpx;
+    width: 200rpx;
+    border: 1rpx solid #999;
+    border-radius: 30rpx;
+    line-height: 50rpx;
+    text-align: center;
+    font-size: 30rpx;
+    position: absolute;
+    left: 30rpx;
+    top: 25rpx;
+    z-index: -1;
+}
+
+.imgbg {
+    background: #333;
+    color: #fff;
+}

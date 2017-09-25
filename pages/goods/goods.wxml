@@ -1,0 +1,20 @@
+<view class="container">
+    <view class="body">
+        <view class="left">
+            <view class='body-left' wx:for="{{navs}}" wx:key='index'>
+                <view data-index='{{index}}' data-id="{{item.nav}}" bindtap='ChangeNav' class="{{unindex===index?'background':''}}">{{item.nav}}</view>
+            </view>
+        </view>
+        <view class="block">
+            <navigator url="../details/details?id={{item.id}}" wx:for="{{cons}}" wx:key="index">
+                <image src="{{item.imgurl}}" class="body-con-img"></image>
+                <view class="con-text">{{item.con}}</view>
+                <view class="con-footer">
+                    <view class="footer-left">
+                        <text>￥</text>{{item.price}}
+                    </view>
+                </view>
+            </navigator>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,128 @@
+<view class="container">
+    <view class='user' wx:if="{{hasuserInfo}}">
+        <image src='{{avatarUrl}}'></image>
+        <text>{{nickName}}</text>
+    </view>
+    <view wx:else>
+        <button open-type='getUserInfo' bindgetuserinfo='getInfo'>点击获取头像昵称</button>
+    </view>
+    <view class="order">
+        <block wx:for="{{icon}}" wx:key="index" data-index='{{index}}' bindtap='link'>
+            <view class="order-con" data-index='{{index}}' bindtap='link'>
+                <image src='{{item.url}}' data-index='{{index}}'></image>
+                <text data-index='{{index}}'>{{item.text}}</text>
+            </view>
+        </block>
+    </view>
+    <view class="address" bindtap="address">
+        <text>地址</text>
+        <image src="../../images/icon/come.png"></image>
+    </view>
+    <view class="scroll">
+        <view class="scroll-con {{unindex===0?'index':''}} ">
+            <view wx:if="{{unindex===0}}">
+                <view class='scroll-con-details' wx:for="{{cons}}" wx:key="index">
+                    <view class="img">
+                        <image src='{{item.imgurl}}'></image>
+                    </view>
+                    <view class='cons'>
+                        <text>{{item.con}}</text>
+                        <view class='details'>
+                            <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
+                            <text>￥{{item.priceNew}}</text>
+                        </view>
+                        <view class='diffent'>
+                            <view bindtap='cancle' class='background-cancle' data-id='{{item.id}}' data-index="{{index}}">取消订单</view>
+                            <view bindtap="pay" class='bold-pay' data-id='{{item.id}}' data-index="{{index}}">付款</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view wx:else>暂无数据！</view>
+        </view>
+        <view class="scroll-con {{unindex===1?'index':''}} ">
+            <view wx:if="{{unindex===1}}">
+
+                <view class='scroll-con-details' wx:for="{{cons}}" wx:key="index">
+                    <view class="img">
+                        <image src='{{item.imgurl}}'></image>
+                    </view>
+                    <view class='cons'>
+                        <text>{{item.con}}</text>
+                        <view class='details'>
+                            <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
+                            <text>￥{{item.priceNew}}</text>
+                        </view>
+                        <view class='diffent'>
+                            <view bindtap='hint'>提醒发货</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view wx:else>暂无数据！</view>
+        </view>
+        <view class="scroll-con {{unindex===2?'index':''}} ">
+            <view wx:if="{{unindex===2}}">
+                <block wx:for="{{cons}}" wx:key="index">
+                    <view class='scroll-con-details'>
+                        <view class="img">
+                            <image src='{{item.imgurl}}'></image>
+                        </view>
+                        <view class='cons'>
+                            <text>{{item.con}}</text>
+                            <view class='details'>
+                                <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
+                                <text>￥{{item.priceNew}}</text>
+                            </view>
+                            <view class='diffent'>
+                                <view bindtap='sure' data-id='{{item.id}}' data-index="{{index}}">确定收货</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="deliver">
+                        <view>物流公司:{{item.dname}}</view>
+                        <view class='dcode'>
+                            <view>运单编号:{{item.dcode}}</view>
+                            <view style='width:115rpx;' data-id='{{item.dcode}}' data-index="{{index}}" bindtap='copy'>复制</view>
+                        </view>
+                        <view>订单编号:{{item.orderCode}}</view>
+                        <view>下单时间:{{item.createDate}}</view>
+                    </view>
+                </block>
+            </view>
+            <view wx:else>暂无数据！</view>
+        </view>
+        <view class="scroll-con {{unindex===3?'index':''}} ">
+            <view wx:if="{{unindex===3}}">
+                <block wx:for="{{cons}}" wx:key="index">
+
+                    <view class='scroll-con-details' wx:for="{{cons}}" wx:key="index">
+                        <view class="img">
+                            <image src='{{item.imgurl}}'></image>
+                        </view>
+                        <view class='cons'>
+                            <text>{{item.con}}</text>
+                            <view class='details'>
+                                <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
+                                <text>￥{{item.priceNew}}</text>
+                            </view>
+                            <view class='diffent'>
+                                <view bindtap='delet' class='background-cancle' data-id='{{item.id}}' data-index="{{index}}">删除</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="deliver">
+                        <view>物流公司:{{item.dname}}</view>
+                        <view class='dcode'>
+                            <view>运单编号:{{item.dcode}}</view>
+                            <view style='width:115rpx;' data-id='{{item.dcode}}' data-index="{{index}}" bindtap='copy'>复制</view>
+                        </view>
+                        <view>订单编号:{{item.orderCode}}</view>
+                        <view>下单时间:{{item.createDate}}</view>
+                    </view>
+                </block>
+            </view>
+            <view wx:else>暂无数据！</view>
+        </view>
+    </view>
+</view>

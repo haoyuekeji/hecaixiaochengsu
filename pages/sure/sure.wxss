@@ -1,0 +1,199 @@
+/* pages/sure/sure.wxss */
+
+page {
+    background: #f0f0f0;
+    padding-bottom: 135rpx;
+}
+
+.address {
+    height: 200rpx;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 20rpx;
+    position: relative;
+}
+
+.img {
+    height: 200rpx;
+    width: 15rpx;
+    float: left;
+}
+
+.img image {
+    height: 200rpx;
+    width: 15rpx;
+}
+
+.address-con {
+    height: 160rpx;
+    width: 710rpx;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
+}
+
+.address-con-top, .address-con-footer {
+    height: 80rpx;
+    width: 710rpx;
+    margin-left: 15rpx;
+    font-size: 30rpx;
+}
+
+.address-con-top {
+    width: 500rpx;
+    display: flex;
+    justify-content: space-between;
+}
+
+.address-img {
+    height: 22rpx;
+    width: 12rpx;
+    position: absolute;
+    right: 20rpx;
+    bottom: 20rpx;
+}
+
+.con {
+    height: 200rpx;
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+}
+
+.con-left {
+    float: left;
+    margin-top: 10rpx;
+}
+
+.con-left image {
+    width: 170rpx;
+    margin-left: 10rpx;
+    margin-top: 10rpx;
+}
+
+.con-right {
+    height: 210rpx;
+    width: auto;
+    display: flex;
+    font-size: 25rpx;
+    padding: 30rpx 20rpx 30rpx 30rpx;
+    flex-wrap: wrap;
+    align-content: space-between;
+    box-sizing: border-box;
+}
+
+.con-right-text {
+    height: 60rpx;
+    width: 100%;
+    font-size: 30rpx;
+    color: #333;
+    line-height: 30rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.con-right-price {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.con-right-price-con {
+    font-size: 30rpx;
+    color: #f40000;
+}
+
+.con-right-price text {
+    font-size: 20rpx;
+}
+
+#nums {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 25rpx;
+    color: #000;
+}
+
+.old-price {
+    text-decoration: online;
+}
+
+.old-price, .nums {
+    font-size: 20rpx;
+    color: #ccc;
+    line-height: 40rpx;
+    margin-left: 20rpx;
+}
+
+.footer {
+    height: 120rpx;
+    width: 100%;
+    background: #fff;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer text {
+    font-size: 20rpx;
+    color: #f40000;
+}
+
+label {
+    font-size: 35rpx;
+    color: #f40000;
+}
+
+.footer-price, .footer-submit {
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    color: #333;
+    font-size: 30rpx;
+}
+
+.footer-submit {
+    height: 80rpx;
+    width: 250rpx;
+    background: #f40000;
+    line-height: 80rpx;
+    border-radius: 50rpx;
+    color: #fff;
+}
+
+.guige {
+    height: 80rpx;
+    border-bottom: 1rpx solid #f1f1f1;
+    display: flex;
+    justify-content: space-between;
+    line-height: 80rpx;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 0 15rpx;
+    margin-bottom: 15rpx;
+}
+
+.guige .price-con {
+    width: auto;
+    font-size: 30rpx;
+}
+
+.price-con text {
+    color: #999;
+}
+
+.logo-text {
+    color: #999;
+    font-size: 30rpx;
+    align-self: center;
+    margin-top: 15rpx;
+}

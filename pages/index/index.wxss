@@ -1,0 +1,94 @@
+/**index.wxss**/
+
+page {
+    background: #e6e6e6;
+    font-family: "SourceHanSansCN-Medium";
+}
+
+.slide-image {
+    width: 100%;
+}
+
+swiper {
+    margin-bottom: 15rpx;
+}
+
+video {
+    height: 400rpx;
+    width: 100%;
+}
+
+.hot {
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    padding: 0 140rpx;
+    color: #fff;
+    background: #000;
+    display: flex;
+    justify-content: space-around;
+    box-sizing: border-box;
+    margin-top: 15rpx;
+}
+
+.body {
+    width: 750rpx;
+    display: flex;
+    padding-bottom: 30rpx;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+navigator {
+    margin-top: 15rpx;
+    padding: 15rpx;
+    background: #fff;
+    width: 370rpx;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.body-con-img {
+    width: 100%;
+    height: 305rpx;
+}
+
+.con-text {
+    height: 70rpx;
+    width: 100%;
+    line-height: 35rpx;
+    font-size: 25rpx;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.con-footer {
+    width: 100%;
+    height: 60rpx;
+    line-height: 70rpx;
+    overflow: hidden;
+}
+
+.footer-left {
+    width: 50%;
+    float: left;
+    color: #f70000;
+    font-size: 30rpx;
+    font-weight: 500;
+}
+
+.footer-left text {
+    font-size: 25rpx;
+    float: left;
+}
+
+.logo-text {
+    color: #999;
+    font-size: 30rpx;
+    align-self: center;
+    margin-bottom: 15rpx;
+}
