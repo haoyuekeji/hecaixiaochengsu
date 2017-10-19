@@ -1,6 +1,7 @@
 /* pages/sure/sure.wxss */
 
 page {
+    height: 100%;
     background: #f0f0f0;
     padding-bottom: 135rpx;
 }
@@ -196,4 +197,29 @@ label {
     font-size: 30rpx;
     align-self: center;
     margin-top: 15rpx;
+}
+
+.leavemessage {
+    width: 100%;
+    height: auto;
+    padding-bottom: 50rpx;
+    background: #fff;
+    position: relative;
+    margin-bottom: 80rpx;
+}
+
+.leavemessage view {
+    position: absolute;
+    right: 10rpx;
+    bottom: 10rpx;
+    font-size: 30rpx;
+}
+
+textarea {
+    background: #fff;
+    width: 95%;
+    margin: 0 auto;
+    padding: 15rpx 0;
+    box-sizing: border-box;
+    font-size: 35rpx;
 }

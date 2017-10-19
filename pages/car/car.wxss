@@ -107,7 +107,7 @@ page {
 .car-left icon {
     position: absolute;
     left: 0;
-    top:25rpx;
+    top: 25rpx;
     margin-left: 32rpx;
 }
 
@@ -155,6 +155,8 @@ page {
     font-size: 35rpx;
     color: #f40000;
     float: right;
+    box-sizing: border-box;
+    padding-right: 15rpx;
 }
 
 .car-price text {
@@ -189,4 +191,30 @@ page {
     position: absolute;
     left: 750rpx;
     top: 0;
+}
+
+.details {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 15rpx;
+}
+
+.details view {
+    height: auto;
+    width: 70%;
+    color: #999;
+    font-size: 25rpx;
+    display: inline-block;
+}
+
+.details text {
+    height: 40rpx;
+    width: 25%;
+    color: #f40000;
+    font-weight: 500;
+    margin-top: 55rpx;
 }

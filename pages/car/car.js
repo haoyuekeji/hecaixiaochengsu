@@ -11,8 +11,8 @@ Page({
         priceAll: 0,//件数
         style: '1rpx solid #cccccc',
         color: '#000',//数字变为一时，颜色变化
-        Seclect: true,//默认选中
-        SeclectAll: true,//默认全选
+        Seclect: false,//默认选中
+        SeclectAll: false,//默认全选
     },
 
     //点击单个商品选中
@@ -53,8 +53,15 @@ Page({
         let color = cons[index].color;
         let nums = 0;
         if (nums_ === 1) {
-            color = '#cccccc';
             wx.hideLoading();
+            color = '#cccccc';
+            wx.showToast({
+                title: '数量最少为1',
+                image: '../../images/icon/fail.png',
+                mask: true,
+                duration: 1000
+            })
+            return false
         } else {
             color = '#000000';
             nums = -1
@@ -70,8 +77,7 @@ Page({
                 success: function (res) {
                     if (res.statusCode === 200) {
                         nums_ <= 1 ? nums_ = 1 : nums_--;
-
-
+                        nums_ === 1 ? color = '#cccccc' : color = '#000000';
                         cons[index].color = color;
                         cons[index].nums = nums_;
                         that.setData({
@@ -83,7 +89,6 @@ Page({
                 }
             })
         };
-
     },
 
     //点击增加件数
@@ -130,6 +135,7 @@ Page({
         const that = this;
         const id = e.target.dataset.id;
         const index = e.target.dataset.index;
+        const openid = wx.getStorageSync('openid')
         let cons = this.data.cons;
         that.setData({
             id: 'del'
@@ -138,7 +144,8 @@ Page({
             wx.request({
                 url: localhost + "/shopCar/del",
                 data: {
-                    id: id
+                    id: id,
+                    openId: openid,
                 },
                 success: function (res) {
                     if (res.statusCode === 200) {
@@ -154,14 +161,12 @@ Page({
                             duration: 1000
                         })
                     }
+                    that.getPrice();
+                    that.SeclectAll();
                     wx.hideLoading();
                 }
             })
         }, 500)
-
-        console.log(id)
-        this.SeclectAll();
-        this.getPrice();
     },
     //点击跳转订单确认页面
     buy: function () {
@@ -169,17 +174,25 @@ Page({
         const cons = this.data.cons;
         for (let i = 0; i < cons.length; i++) {
             if (cons[i].Seclect === true) {
-                paylist.push({ pid: cons[i].pid, productId: cons[i].productId, nums: cons[i].nums })
+                paylist.push({ pid: cons[i].id, productId: cons[i].productId, nums: cons[i].nums, dname: cons[i].dname })
             }
+        }
+        if (paylist.length === 0) {
+            wx.showModal({
+                title: '提示',
+                content: '您还没有选择商品哦！',
+            })
+            return false
         }
         wx.navigateTo({
             url: '../sure/sure?paylist=' + JSON.stringify(paylist)
         })
     },
     //点击跳转详情页
-    link: function () {
+    link: function (e) {
+        const id = e.target.dataset.id;
         wx.navigateTo({
-            url: '../details/details?id='
+            url: '../details/details?id=' + id
         })
     },
     //判断全选按钮是否应该选中
@@ -212,7 +225,7 @@ Page({
         let len = this.data.cons.length;
         let cons = this.data.cons;
         for (var i = 0; i < len; i++) {
-            if (cons[i].Seclect == Seclect) {
+            if (cons[i].Seclect !== Seclect) {
                 priceAll++;
                 price_ += cons[i].price * cons[i].nums
             }
@@ -222,9 +235,6 @@ Page({
             priceAll: priceAll,
             price: price
         })
-    },
-    scroll: function (e) {
-        console.log(1)
     },
 
     /**
@@ -251,9 +261,9 @@ Page({
         wx.showLoading({
             title: '加载中',
         })
-        const openid = wx.getStorageSync("openid");
         var that = this;
         const Seclect = that.data.Seclect;
+        const openid = wx.getStorageSync('openid');
         wx.request({
             url: localhost + "/shopCar/list",
             data: {
@@ -262,7 +272,6 @@ Page({
             },
             success: function (res) {
                 const content = res.data.data;
-                // console.log(content)
                 const cons = [];
                 let color = '';
                 for (let i = 0; i < content.length; i++) {
@@ -272,13 +281,15 @@ Page({
                     let nums = content[i].shopCarDetails[0].amount;
                     nums == 1 ? color = '#ccc' : color = '#000';
                     let id = content[i].id;
-                    let pid = content[i].shopCarDetails[0].produtsType.productId;
-                    let productId = content[i].shopCarDetails[0].produtsType.id;
-                    cons.push({ imgurl: imgurl, con: con, price: price, nums: nums, Seclect: Seclect, color: color, id: id, pid: pid, productId: productId })
+                    let pid = content[i].productses[0].produtsTypes[0].productId;
+                    let productId = content[i].productses[0].produtsTypes[0].id;
+                    let size = content[i].productses[0].produtsTypes[0].size;
+                    let productcolor = content[i].productses[0].produtsTypes[0].color;
+                    let dname = content[i].productses[0].dname;
+                    cons.push({ imgurl: imgurl, con: con, price: price, nums: nums, Seclect: Seclect, color: color, id: pid, pid: id, productId: productId, size: size, productcolor: productcolor, dname: dname })
                 }
                 that.setData({
-                    cons: cons,
-                    SeclectAll: true
+                    cons: cons
                 })
                 that.getPrice();
                 wx.hideLoading()

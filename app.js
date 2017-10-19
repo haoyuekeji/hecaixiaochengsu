@@ -9,6 +9,19 @@ App({
 
     getUserInfo: function (cb) {
         var that = this
+        //店铺浏览量
+        wx.request({
+            url: that.localhost.localhost + '/dictionary/addViews',
+            data: {
+                sellerId: that.token.token
+            },
+            fail: function (res) {
+              wx.showModal({
+                  title: '提示',
+                  content: '网络可能存在波动，请稍后再试！',
+              })
+            }
+        });
         wx.login({
             success: function (res) {
                 wx.request({
@@ -36,13 +49,6 @@ App({
                                 sellerId: that.token.token
                             }
                         })
-                        //店铺浏览量
-                        wx.request({
-                            url: that.localhost.localhost + '/dictionary/addViews',
-                            data: {
-                                sellerId: that.token.token
-                            }
-                        })
                         wx.setStorageSync("openid", openid)
                     }
                 })
@@ -65,10 +71,10 @@ App({
         userInfo: null,
     },
     localhost: {
-        localhost: 'https://www.cslapp.com'
+        localhost: 'http://localhost:80'
     },
     token: {
-        token: 2
+        token: 1
     },
     appid: {
         appid: 'wxe46b9aa1b768e5fe'

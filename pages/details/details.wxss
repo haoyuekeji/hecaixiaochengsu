@@ -27,6 +27,10 @@ swiper {
     display: flex;
 }
 
+.con {
+    font-size: 30rpx;
+}
+
 .guige {
     border: 1rpx solid #f2f2f2;
 }
@@ -38,21 +42,29 @@ swiper {
 }
 
 .price-con {
-    width: 200rpx;
+    width: 700rpx;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .nonetext, .price-num {
     color: #ccc;
     margin-left: 20rpx;
-    font-size: 20rpx;
+    margin-top: 10rpx;
+    font-size: 25rpx;
+}
+
+.nonetext {
+    flex-grow: 1;
+    text-decoration: line-through;
 }
 
 .price-num {
-    margin-left: 0;
-    margin-top: 10rpx;
+    flex-grow: 8;
+    text-align: right;
+    color: #999;
 }
 
 .guige {
@@ -159,12 +171,13 @@ label {
 
 .chima-details-view {
     height: 40rpx;
-    width: 100rpx;
+    width: auto;
     background: #f0f0f0;
     border-radius: 20rpx;
-    line-height: 40rpx;
+    line-height: 20rpx;
     text-align: center;
-    padding: 5rpx 20rpx;
+    padding: 10rpx 20rpx;
+    box-sizing: border-box;
     margin-right: 20rpx;
     margin-top: 20rpx;
 }
@@ -334,7 +347,7 @@ label {
 }
 
 .footer-right-buy {
-    border:1rpx solid #f40000;
+    border: 1rpx solid #f40000;
 }
 
 .footer-right .footer-right-car, .footer-right .footer-right-buy {

@@ -7,7 +7,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        size: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+        // size: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
         indicatorDots: true,
         autoplay: true,
         interval: 3500,
@@ -15,7 +15,8 @@ Page({
         cover: true,
         background: '#cdcdcd',
         nums: 1,
-        price: 0
+        price: 0,
+        stu: true
     },
 
     NumJian: function () {
@@ -109,13 +110,13 @@ Page({
                         },
                         success: function (res) {
 
-                            console.log(res.statusCode);
+
                             if (res.statusCode === 200) {
                                 wx.showToast({
                                     title: '添加购物车成功！',
                                     icon: 'success',
                                     mask: true,
-                                    duration: 1500
+                                    duration: 1200
                                 })
                             }
                         }
@@ -123,7 +124,7 @@ Page({
                 }
             } catch (e) {
                 // Do something when catch error
-                console.log(e)
+
             }
         } else {
             wx.showModal({
@@ -318,6 +319,9 @@ Page({
         wx.showLoading({
             title: '加载中',
         })
+        this.setData({
+            options: options
+        })
         var that = this;
         wx.request({
             url: localhost + '/seller/pro/findOne',
@@ -328,22 +332,25 @@ Page({
             success: function (res) {
                 const content = res.data.data;
                 const details = [];
-                console.log(res)
                 const produtsTypes = content.produtsTypes;
                 for (let q = produtsTypes.length - 1; q >= 0; q--) {
                     if (produtsTypes[q].amount === 0 || produtsTypes[q].active === false) {
                         produtsTypes.splice(q, 1);
                     }
                 }
-                console.log(produtsTypes)
+
                 const imgUrls = [];
                 const imgurl = [];
                 const size = [];
+                const size_ = []
                 const color = [];
+                const json = {};
                 let kucun = 0;
                 let price = 0;
+                var monthSale = 0;
                 const img = content.images.split(',');
                 const imgs = content.indexImages.split(',');
+                content.monthSale === null ? monthSale = 0 : monthSale = content.monthSale
                 // img.pop();
                 const con = content.pname;
                 const priceNew = content.produtsTypes[0].priceNew;
@@ -353,7 +360,7 @@ Page({
                     imgUrls.push(imgs[i])
                 }
                 imgUrls.length <= 1 ? that.setData({ indicatorDots: false }) : '';
-                console.log(imgUrls.length)
+
                 for (let k = 0; k < img.length; k++) {
                     imgurl.push(img[k])
                 }
@@ -373,6 +380,10 @@ Page({
                     let kucun = 0;
                     for (let q = 0; q < produtsTypes.length; q++) {
                         if (details[w].color === produtsTypes[q].color) {
+                            if (!json[produtsTypes[q].size]) {
+                                size_.push(produtsTypes[q].size);
+                                json[produtsTypes[q].size] = 1;
+                            }
                             kucun += produtsTypes[q].amount;
                             price = produtsTypes[q].priceNew;
                             details[w].size.push({ size: produtsTypes[q].size, priceNew: produtsTypes[q].priceNew, amount: produtsTypes[q].amount, id: produtsTypes[q].id, productId: produtsTypes[q].productId });
@@ -382,6 +393,7 @@ Page({
                     details[w].kucun = kucun;
                     details[w].priceNew = price;
                 }
+
                 that.setData({
                     imgUrls: imgUrls,
                     con: con,
@@ -393,7 +405,9 @@ Page({
                     kucun: kucun,
                     price: priceNew,
                     details: details,
-                    pid: options.id
+                    pid: options.id,
+                    monthSale: monthSale,
+                    size: size_
                 })
                 wx.hideLoading();
             }
@@ -411,7 +425,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-    
+
     },
 
     /**
@@ -439,12 +453,17 @@ Page({
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-        wx.showLoading({
-            title: '加载中',
-        });
+        const that = this;
+        const options = this.data.options;
+        this.setData({
+            stu: false
+        })
+        this.onLoad(options);
         setTimeout(function () {
-            wx.hideLoading();
-        }, 400)
+            that.setData({
+                stu: true
+            })
+        }, 1200)
     },
 
     /**

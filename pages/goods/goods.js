@@ -7,13 +7,6 @@ Page({
      * 页面的初始数据
      */
     data: {
-        navs: [
-            { nav: '全部' },
-            { nav: '大衣' },
-            { nav: '衬衫' },
-            { nav: '短裙' },
-            { nav: '连衣裙' },
-        ],
         unindex: 0
     },
     ChangeNav: function (e) {
@@ -44,20 +37,35 @@ Page({
             },
             success: function (res) {
                 const content = res.data.data;
+                const nav = ['全部'];
                 const cons = [];
+                const json = {};
+                var monthSale = 0;
                 for (let i = 0; i < content.length; i++) {
+                    let ptypeName = content[i].ptypeName;
                     let img = content[i].indexImages.split(',')[0];
-                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].priceNew, id: content[i].id });
-
+                    content[i].monthSale === null ? monthSale = 0 : monthSale = content[i].monthSale
+                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].priceNew, id: content[i].id, monthSale: monthSale });
+                    if (!json[ptypeName]) {
+                        nav.push(ptypeName);
+                        json[ptypeName] = 1;
+                    }
                 }
+                cons.sort(that.sortmonthSale).reverse()
+
                 that.setData({
-                    cons: cons
+                    cons: cons,
+                    nav: nav,
+
                 })
                 wx.hideLoading()
             }
         })
     },
 
+    sortmonthSale: function (a, b) {
+        return a.monthSale - b.monthSale
+    },
     ptypegoods: function (ptypename) {
         const that = this;
         wx.request({
@@ -69,11 +77,15 @@ Page({
             success: function (res) {
                 const content = res.data.data;
                 const cons = [];
+                var monthSale = 0;
                 for (let i = 0; i < content.length; i++) {
                     let img = content[i].indexImages.split(',')[0];
-                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].priceNew, id: content[i].id });
+                    content[i].monthSale === null ? monthSale = 0 : monthSale = content[i].monthSale;
+                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].priceNew, id: content[i].id, monthSale: monthSale });
 
                 }
+                cons.sort(that.sortmonthSale).reverse()
+
                 that.setData({
                     cons: cons,
                 })
@@ -85,7 +97,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function () {
         this.Allgoods()
     },
 

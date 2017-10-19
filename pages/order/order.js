@@ -27,20 +27,37 @@ Page({
     },
     address: function () {
         var that = this;
-        wx.chooseAddress({
+        wx.getSetting({
             success: function (res) {
-                that.setData({
-                    userName: res.userName,
-                    telNumber: res.telNumber,
-                    address: res.provinceName + res.cityName + res.countyName + res.detailInfo + res.nationalCode,
-                })
-            },
-            fail: function () {
-                wx.showModal({
-                    title: '提醒',
-                    content: '取消将无法获取收货地址！'
-                })
+                if (res.authSetting["scope.address"] === false) {
+                    wx.showModal({
+                        title: '提示',
+                        content: '无法获取你的收货地址，请点击确定进行授权！',
+                        success: function (res) {
+                            if (res.confirm) {
+                                wx.openSetting({
+
+                                })
+                            }
+                        }
+                    })
+                } else {
+                    wx.chooseAddress({
+                        success: function (res) {
+                            that.setData({
+                                userName: res.userName,
+                                telNumber: res.telNumber,
+                                address: res.provinceName + res.cityName + res.countyName + res.detailInfo + res.nationalCode,
+                            })
+                        }
+                    })
+                }
             }
+        })
+    },
+    setting: function () {
+        wx.openSetting({
+
         })
     },
     link: function (e) {
@@ -67,7 +84,7 @@ Page({
         wx.hideLoading();
     },
     getInfo: function (e) {
-        console.log(e)
+
         this.setData({
             avatarUrl: e.detail.userInfo.avatarUrl,
             nickName: e.detail.userInfo.nickName,
@@ -75,68 +92,83 @@ Page({
         })
     },
     pay: function (e) {
+        wx.showLoading({
+            title: '加载中',
+        })
+
         const that = this;
         const index = e.target.dataset.index;
         const id = e.target.dataset.id;
+        const price = e.target.dataset.price;
+        const amount = e.target.dataset.amount;
         const openid = wx.getStorageSync('openid');
         let cons_ = that.data.cons;
-        wx.login({
-            success: function (res) {
-                wx.request({
-                    url: localhost + '/customer/getSessionKey',
-                    data: {
-                        appId: appid,
-                        code: res.code,
-                        secret: "8bcdb74a9915b5685fa0ec37f6f25b24"
-                    },
+        wx.request({
+            url: 'https://wxapp.edeyun.cn/fujun/ip.php',
+            success: function (e) {
+                const IP = e.data;
+                wx.login({
                     success: function (res) {
-                        const session_key = JSON.parse(res.data.data).session_key;
                         wx.request({
-                            url: localhost + '/pay/do',
+                            url: localhost + '/customer/getSessionKey',
                             data: {
                                 appId: appid,
-                                body: "禾才商务-服装",
-                                mchId: "1487862802",
-                                openId: openid,
-                                ip: that.data.IP,
-                                total_fee: 1,
-                                session_key: session_key,
-                                key1: "hecaishangwu1234hecaishangwu1234",
-                                sellerId: token
+                                code: res.code,
+                                secret: "8bcdb74a9915b5685fa0ec37f6f25b24"
                             },
                             success: function (res) {
-                                const content = res.data[0];
-                                console.log(content)
-                                wx.requestPayment({
-                                    timeStamp: content.timeStamp,
-                                    nonceStr: content.nonceStr,
-                                    package: content.package,
-                                    signType: 'MD5',
-                                    paySign: content.paySign,
+                                const session_key = JSON.parse(res.data.data).session_key;
+                                const total_fee = (price * amount * 100) - 0;
+
+                                wx.request({
+                                    url: localhost + '/pay/do',
+                                    data: {
+                                        appId: appid,
+                                        body: "禾才商务-服装",
+                                        mchId: "1487862802",
+                                        openId: openid,
+                                        ip: IP,
+                                        total_fee: total_fee,
+                                        session_key: session_key,
+                                        key1: "hecaishangwu1234hecaishangwu1234",
+                                        sellerId: token
+                                    },
                                     success: function (res) {
-                                        wx.request({
-                                            url: localhost + "/order/changeState",
-                                            data: {
-                                                oid: id,
-                                                state: "待发货订单",
-                                                sellerId: token
-                                            },
-                                            success: function () {
-                                                cons_.splice(index, 1)
-                                                const cons = cons_;
-                                                that.setData({
-                                                    cons: cons
+                                        const content = res.data[0];
+                                        wx.hideLoading();
+                                        wx.requestPayment({
+                                            timeStamp: content.timeStamp,
+                                            nonceStr: content.nonceStr,
+                                            package: content.package,
+                                            signType: 'MD5',
+                                            paySign: content.paySign,
+                                            success: function (res) {
+                                                wx.request({
+                                                    url: localhost + "/order/changeState",
+                                                    data: {
+                                                        oid: id,
+                                                        state: "待发货订单",
+                                                        sellerId: token
+                                                    },
+                                                    success: function () {
+                                                        cons_.splice(index, 1)
+                                                        const cons = cons_;
+                                                        that.setData({
+                                                            cons: cons
+                                                        })
+                                                    }
                                                 })
+                                            },
+                                            fail: function (res) {
+                                                wx.hideLoading();
+                                                if (res.errMsg !== "requestPayment:fail cancel") {
+                                                    wx.showModal({
+                                                        title: '提示',
+                                                        content: res.err_desc,
+                                                    })
+                                                }
                                             }
                                         })
-                                    },
-                                    fail: function (res) {
-                                        if (res.errMsg !== "requestPayment:fail cancel") {
-                                            wx.showModal({
-                                                title: '提示',
-                                                content: res.err_desc,
-                                            })
-                                        }
                                     }
                                 })
                             }
@@ -164,6 +196,12 @@ Page({
                 const cons = cons_;
                 that.setData({
                     cons: cons
+                });
+                wx.showToast({
+                    title: '已取消',
+                    icon: 'success',
+                    duration: 500
+
                 })
             }
         })
@@ -187,11 +225,16 @@ Page({
                 sellerId: token
             },
             success: function (res) {
-                console.log(res)
+
                 cons_.splice(index, 1)
                 const cons = cons_;
                 that.setData({
                     cons: cons
+                });
+                wx.showToast({
+                    title: '已确认',
+                    icon: 'success',
+                    duration: 500
                 })
             }
         })
@@ -200,7 +243,7 @@ Page({
         const that = this;
         const index = e.target.dataset.index;
         const id = e.target.dataset.id;
-        console.log(id)
+
         const openid = wx.getStorageSync('openid');
         let cons_ = that.data.cons;
         wx.request({
@@ -211,21 +254,26 @@ Page({
                 sellerId: token
             },
             success: function (res) {
-                console.log(res)
+
                 cons_.splice(index, 1)
                 const cons = cons_;
                 that.setData({
                     cons: cons
+                });
+                wx.showToast({
+                    title: '已删除',
+                    icon: 'success',
+                    duration: 500
                 })
             }
         })
     },
-    copy:function(e){
+    copy: function (e) {
         const dcode = e.target.dataset.id;
-        console.log(e.target.dataset.id);
+
         wx.setClipboardData({
             data: dcode,
-            success:function(res){
+            success: function (res) {
                 wx.showToast({
                     title: '复制成功！',
                 })
@@ -233,11 +281,13 @@ Page({
         })
     },
     setCons: function (index) {
+        this.setData({
+            cons: []
+        })
         const that = this;
         const cons = [];
         const openid = wx.getStorageSync('openid');
         const getstatus = util.getstatus(index, localhost, openid, token, function (data) {
-            console.log(data)
             if (data.length >= 1) {
                 for (let i = 0; i < data.length; i++) {
                     let imgurl = data[i].products[0].indexImages.split(",")[0];
@@ -250,7 +300,8 @@ Page({
                     let dcode = data[i].deliver.dcode;
                     let orderCode = data[i].orderCode;
                     let createDate = data[i].createDate
-                    cons.push({ imgurl: imgurl, con: con, color: color, size: size, priceNew: priceNew, id: id, dname: dname, dcode: dcode, orderCode: orderCode, createDate: createDate })
+                    let amount = data[i].amount;
+                    cons.push({ imgurl: imgurl, con: con, color: color, size: size, priceNew: priceNew, id: id, amount: amount, dname: dname, dcode: dcode, orderCode: orderCode, createDate: createDate })
                 }
                 that.setData({
                     cons: cons
@@ -260,20 +311,18 @@ Page({
                     cons: cons
                 })
             }
-            // console.log(cons)
-
         });
     },
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
+    onLoad: function () {
         wx.showLoading({
             title: '加载中',
         })
         const that = this;
         app.getUserInfo(function (data) {
-            console.log(data);
+
             that.setData({
                 avatarUrl: data.avatarUrl,
                 nickName: data.nickName,
@@ -281,11 +330,6 @@ Page({
             })
             wx.hideLoading()
         })
-        util.GetIP(function (ip) {
-            that.setData({
-                IP: ip
-            })
-        });
     },
 
     /**
@@ -303,7 +347,7 @@ Page({
         const cons = [];
         const openid = wx.getStorageSync('openid');
         const getstatus = util.getstatus(0, localhost, openid, token, function (data) {
-            console.log(data);
+
             for (let i = 0; i < data.length; i++) {
                 let imgurl = data[i].products[0].indexImages.split(",")[0];
                 let con = data[i].products[0].pname;
@@ -311,7 +355,7 @@ Page({
                 let size = data[i].produtsTypes[0].size;
                 let priceNew = data[i].produtsTypes[0].priceNew;
                 let id = data[i].id;
-                cons.push({ imgurl: imgurl, con: con, color: color, size: size, priceNew: priceNew, id: id })
+                cons.push({ imgurl: imgurl, con: con, color: color, size: size, priceNew: priceNew, id: id, amount: data[i].amount })
             }
             that.setData({
                 cons: cons

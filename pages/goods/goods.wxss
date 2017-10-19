@@ -26,6 +26,7 @@ page {
     position: fixed;
     left: 0;
     top: 0;
+    overflow: auto;
 }
 
 .body-left view {
@@ -62,7 +63,6 @@ navigator {
 
 .body-con-img {
     width: 270rpx;
-    height: 270rpx;
 }
 
 .con-text {
@@ -94,4 +94,10 @@ navigator {
 
 .hint {
     margin-left: 210rpx;
+}
+
+.monthSale {
+    color: #999;
+    font-size: 20rpx;
+    margin-top: 10rpx;
 }

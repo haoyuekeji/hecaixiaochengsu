@@ -12,6 +12,7 @@ page {
     flex-direction: column;
     box-sizing: border-box;
     padding: 30rpx;
+    position: relative;
 }
 
 .user image {
@@ -57,7 +58,7 @@ page {
     width: 100%;
     background: #fff;
     font-size: 30rpx;
-    border-top:1rpx solid #f2f2f2;
+    border-top: 1rpx solid #f2f2f2;
     line-height: 80rpx;
     padding: 0 30rpx;
     display: flex;
@@ -109,7 +110,6 @@ page {
 .img {
     height: 250rpx;
     width: 250rpx;
-    background: red;
 }
 
 .img image {
@@ -154,7 +154,7 @@ page {
 
 .details view {
     height: auto;
-    width: 65%;
+    width: 70%;
     color: #999;
     font-size: 25rpx;
     display: inline-block;
@@ -165,7 +165,7 @@ page {
     width: 25%;
     color: #f40000;
     font-weight: 500;
-     margin-top: 55rpx; 
+    margin-top: 55rpx;
 }
 
 .diffent {
@@ -207,7 +207,7 @@ page {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    border-top:1rpx solid #f2f2f2;
+    border-top: 1rpx solid #f2f2f2;
 }
 
 .deliver view {
@@ -219,4 +219,12 @@ page {
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+
+.setting {
+    position: absolute;
+    right: 10rpx;
+    top: 0rpx;
+    color: #fff;
+    font-size: 35rpx;
 }

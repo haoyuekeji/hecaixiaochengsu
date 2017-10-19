@@ -86,7 +86,7 @@ function getstatus(stu, localhost, openid, token, callback) {
                     let content = res.data.data;
                     for (let i = content.length - 1; i >= 0; i--) {
                         if (content[i].active === false) {
-                            content.splice(i,1);
+                            content.splice(i, 1);
                         }
                     }
                     callback(content)
@@ -95,20 +95,11 @@ function getstatus(stu, localhost, openid, token, callback) {
             break;
     }
 }
-function GetIP(callback) {
-    wx.request({
-        url: 'https://wxapp.edeyun.cn/fujun/ip.php',
-        success: function (e) {
-            const IP = e.data;
-            callback(IP)
-        }
-    })
-}
+
 module.exports = {
     formatTime: formatTime,
     Getstring: Getstring,
-    getstatus: getstatus,
-    GetIP: GetIP
+    getstatus: getstatus
 }
 
 

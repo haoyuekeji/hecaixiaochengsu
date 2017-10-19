@@ -10,7 +10,8 @@
                 <text>电话：{{telNumber}}</text>
             </view>
             <view class="address-con-footer">
-                <text>收货地址：{{address}}</text>
+                <text>收货地址：{{address}}     
+                邮编:{{nationalCode}}</text>
             </view>
         </view>
         <image src="../../images/icon/come.png" class='address-img'></image>
@@ -39,6 +40,10 @@
                 </view>
             </view>
         </block>
+        <view class='leavemessage'>
+            <textarea placeholder='买家留言：' class='textarea' bindconfirm="save" bindinput='input' bindblur="save"></textarea>
+            <view>{{worder_number}}/140</view>
+        </view>
     </view>
     <view class="footer">
         <view class="footer-price">实付：
@@ -47,5 +52,5 @@
         </view>
         <view class="footer-submit" bindtap='pay'>确认支付</view>
     </view>
-    <view class='logo-text'>@皓月科技提供技术支持</view>
+    <view class='logo-text'>@苏州皓月网络科技提供技术支持</view>
 </view>

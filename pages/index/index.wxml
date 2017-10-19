@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container">
-    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color='#f70000' circular="true">
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color='#666' circular="true" wx:if='{{imgUrls}}' style='height:{{height}}'>
         <block wx:for="{{imgUrls}}" wx:key="index">
             <swiper-item>
                 <image src="{{item}}" class="slide-image" mode="widthFix"></image>
@@ -8,7 +8,7 @@
         </block>
     </swiper>
     <video wx:if="{{video_src}}" src='{{video_src}}' controls="true" objectFit="contain"></video>
-    <view class="hot" bindtap="bindViewTap">
+    <view class="hot">
         <text>———</text>
         <text>热卖商品</text>
         <text>———</text>
@@ -16,8 +16,9 @@
     <view class="body">
         <block wx:for="{{cons}}" wx:key="index">
             <navigator url="../details/details?id={{item.id}}">
-                <image src="{{item.imgurl}}" class="body-con-img"></image>
+                <image src="{{item.imgurl}}" class="body-con-img" mode='widthFix'></image>
                 <view class="con-text">{{item.con}}</view>
+                <!-- <view class='monthSale'>销量：{{item.monthSale}}</view> -->
                 <view class="con-footer">
                     <view class="footer-left">
                         <text>￥</text>{{item.price}}
@@ -26,5 +27,5 @@
             </navigator>
         </block>
     </view>
-    <view class='logo-text'>@皓月科技提供技术支持</view>
+    <view class='logo-text' hidden='{{logo_stu}}'>@苏州皓月网络科技提供技术支持</view>
 </view>

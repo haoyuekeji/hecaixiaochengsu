@@ -2,6 +2,7 @@
     <view class='user' wx:if="{{hasuserInfo}}">
         <image src='{{avatarUrl}}'></image>
         <text>{{nickName}}</text>
+        <view class='setting' bindtap='setting'>设置</view>
     </view>
     <view wx:else>
         <button open-type='getUserInfo' bindgetuserinfo='getInfo'>点击获取头像昵称</button>
@@ -12,6 +13,7 @@
                 <image src='{{item.url}}' data-index='{{index}}'></image>
                 <text data-index='{{index}}'>{{item.text}}</text>
             </view>
+
         </block>
     </view>
     <view class="address" bindtap="address">
@@ -23,17 +25,17 @@
             <view wx:if="{{unindex===0}}">
                 <view class='scroll-con-details' wx:for="{{cons}}" wx:key="index">
                     <view class="img">
-                        <image src='{{item.imgurl}}'></image>
+                        <image src='{{item.imgurl}}' alt="hecaishangwu"></image>
                     </view>
                     <view class='cons'>
                         <text>{{item.con}}</text>
                         <view class='details'>
-                            <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
-                            <text>￥{{item.priceNew}}</text>
+                            <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
+                            <text>￥{{item.priceNew*item.amount}}</text>
                         </view>
                         <view class='diffent'>
                             <view bindtap='cancle' class='background-cancle' data-id='{{item.id}}' data-index="{{index}}">取消订单</view>
-                            <view bindtap="pay" class='bold-pay' data-id='{{item.id}}' data-index="{{index}}">付款</view>
+                            <view bindtap="pay" class='bold-pay' data-id='{{item.id}}' data-index="{{index}}" data-price='{{item.priceNew}}' data-amount='{{item.amount}}'>付款</view>
                         </view>
                     </view>
                 </view>
@@ -50,8 +52,8 @@
                     <view class='cons'>
                         <text>{{item.con}}</text>
                         <view class='details'>
-                            <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
-                            <text>￥{{item.priceNew}}</text>
+                            <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
+                            <text>￥{{item.priceNew*item.amount}}</text>
                         </view>
                         <view class='diffent'>
                             <view bindtap='hint'>提醒发货</view>
@@ -71,8 +73,8 @@
                         <view class='cons'>
                             <text>{{item.con}}</text>
                             <view class='details'>
-                                <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
-                                <text>￥{{item.priceNew}}</text>
+                                <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
+                                <text>￥{{item.priceNew*item.amount}}</text>
                             </view>
                             <view class='diffent'>
                                 <view bindtap='sure' data-id='{{item.id}}' data-index="{{index}}">确定收货</view>
@@ -103,8 +105,8 @@
                         <view class='cons'>
                             <text>{{item.con}}</text>
                             <view class='details'>
-                                <view>颜色:{{item.color}} 尺码：{{item.size}}</view>
-                                <text>￥{{item.priceNew}}</text>
+                                <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
+                                <text>￥{{item.priceNew*item.amount}}</text>
                             </view>
                             <view class='diffent'>
                                 <view bindtap='delet' class='background-cancle' data-id='{{item.id}}' data-index="{{index}}">删除</view>

@@ -1,6 +1,7 @@
 /**index.wxss**/
 
 page {
+    height: 100%;
     background: #e6e6e6;
     font-family: "SourceHanSansCN-Medium";
 }
@@ -10,7 +11,19 @@ page {
 }
 
 swiper {
+    width: 100%;
     margin-bottom: 15rpx;
+}
+
+swiper-item {
+    height: auto;
+    width: 100%;
+    background: #fff;
+}
+
+swiper-item image {
+    height: auto;
+    width: 100%;
 }
 
 video {
@@ -68,8 +81,8 @@ navigator {
 
 .con-footer {
     width: 100%;
-    height: 60rpx;
-    line-height: 70rpx;
+    height: 50rpx;
+    line-height: 50rpx;
     overflow: hidden;
 }
 
@@ -91,4 +104,10 @@ navigator {
     font-size: 30rpx;
     align-self: center;
     margin-bottom: 15rpx;
+}
+
+.monthSale {
+    color: #999;
+    font-size: 25rpx;
+    margin-top: 10rpx;
 }
