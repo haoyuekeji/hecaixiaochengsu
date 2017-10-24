@@ -16,11 +16,17 @@
                 <view class="nonetext">
                     <text class="nonetext" wx:if="{{priceOldstu}}">￥{{priceOld}}</text>
                 </view>
-                <view class="price-num">销量：{{monthSale}}</view>
+            </view>
+        </view>
+        <view class="guige padding" bindtap='express'>
+            <view class="express-con">
+                <text> 快递: {{deliverPrice_price}}</text>
+                <text>销量：{{monthSale}}</text>
+                <text>{{provinceName}}</text>
             </view>
         </view>
         <view class="guige padding" bindtap="ChooseGuige">
-            <view class="price-con">规格</view>
+            <view class="price-con">选择：尺寸 颜色</view>
             <view class="price-con">
                 <image src="../../images/icon/come.png"></image>
             </view>
@@ -31,11 +37,11 @@
             <view hidden="{{stu}}">@苏州皓月网络科技提供技术支持</view>
         </view>
     </view>
-    <view class="cover" hidden="{{cover}}">
-        <view class="guige-details">
+    <view class="cover" hidden="{{cover}}" bindtap="ChooseGuige">
+        <view class="guige-details" catchtap="guige_details">
             <icon type="cancel" color="#333333" size="23" bindtap="ChooseGuige" />
             <view class="img">
-                <image src="{{guige_img}}" mode="widthFix"></image>
+                <image src="{{guige_img}}" mode="aspectFill"></image>
             </view>
             <view class="cover-details">
                 <view class="cover-price">￥{{price}}</view>
@@ -46,26 +52,26 @@
             <view class="chima">
                 <label>颜色</label>
                 <view class="chima-details">
-                    <view wx:for="{{color}}" bindtap='ChangeColor' wx:key="index" data-index='{{index}}' data-name='{{item}}' class='chima-details-view {{index===Colorindex?"imgbg":""}}'>{{item}}</view>
+                    <view wx:for="{{color}}" catchtap='ChangeColor' wx:key="index" data-index='{{index}}' data-name='{{item}}' class='chima-details-view {{index===Colorindex?"imgbg":""}}'>{{item}}</view>
                 </view>
             </view>
             <view class="chima">
                 <label>尺码</label>
                 <view class="chima-details">
-                    <view class='chima-details-view {{index===Sizeindex?"imgbg":""}}' wx:for="{{size}}" wx:key="index" data-index='{{index}}' data-name='{{item}}' bindtap='ChangeSize'>{{item}}</view>
+                    <view class='chima-details-view {{index===Sizeindex?"imgbg":""}}' wx:for="{{size}}" wx:key="index" data-index='{{index}}' data-name='{{item}}' catchtap='ChangeSize'>{{item}}</view>
                 </view>
             </view>
             <view class="number">
                 <label>购买数量</label>
                 <view class="number-num">
-                    <view style="border-left:1rpx solid #cccccc;color:{{color}}" bindtap="NumJian">-</view>
+                    <view style="border-left:1rpx solid #cccccc;color:{{color}}" catchtap="NumJian">-</view>
                     <view>{{nums}}</view>
-                    <view bindtap="NumJia">+</view>
+                    <view catchtap="NumJia">+</view>
                 </view>
             </view>
             <view class="cover-footer">
-                <view class="footer-right-car" bindtap='SetCar'>加入购物车</view>
-                <view class="footer-right-buy" bindtap='buy'>立即购买</view>
+                <view class="footer-right-car" catchtap='SetCar'>加入购物车</view>
+                <view class="footer-right-buy" catchtap='buy'>立即购买</view>
             </view>
         </view>
     </view>

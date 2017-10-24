@@ -1,0 +1,10 @@
+<view wx:if="{{deliver_price_hidden}}" class='express'>
+    <view>默认运费:</view>
+    <view>快递名称：{{dname}}</view>
+    <view>首件费用：{{price}}元,每增加{{more_account}}{{price_type}}增加{{more_price}}元</view>
+    <view></view>
+    <view>此标准不作为实际支付运费标准，具体运费以确认订单时为准</view>
+</view>
+<view wx:else>快递免邮</view>
+
+<view class='logo-text'>@苏州皓月网络科技提供技术支持</view>

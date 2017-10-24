@@ -38,7 +38,7 @@ Page({
                 for (let i = 0; i < content.length; i++) {
                     var imgurl = content[i].indexImages.split(',')[0];
                     var con = content[i].pname;
-                    var price = content[i].produtsTypes[0].priceNew;
+                    var price = content[i].produtsTypes[0].discountPrice;
                     var id = content[i].id;
                     content[i].monthSale === null ? monthSale = 0 : monthSale = content[i].monthSale
                     cons.push(
@@ -102,7 +102,7 @@ Page({
                 for (let i = 0; i < content.length; i++) {
                     var imgurl = content[i].indexImages.split(',')[0];
                     var con = content[i].pname;
-                    var price = content[i].produtsTypes[0].priceNew;
+                    var price = content[i].produtsTypes[0].discountPrice;
                     var id = content[i].id;
                     content[i].monthSale === null ? monthSale = 0 : monthSale = content[i].monthSale
                     cons.push(
@@ -130,7 +130,7 @@ Page({
                 wx.hideLoading();
                 wx.showModal({
                     title: '提示',
-                    content: '网络故障，请稍后再试！',
+                    content: '网络信号弱，请稍后再试！',
                 })
             }
         })

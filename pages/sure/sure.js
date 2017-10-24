@@ -4,13 +4,13 @@ const token = app.token.token;
 const appid = app.appid.appid;
 const getstring = require('../../utils/util.js');
 Page({
-
     /**
      * 页面的初始数据
      */
     data: {
         priceAll: "0.00",
-        worder_number: 0
+        worder_number: 0,
+        deliver_price_hidden: false
     },
     address: function () {
         var that = this;
@@ -66,7 +66,8 @@ Page({
         const that = this;
         const orderlist = [];
         const openid = wx.getStorageSync('openid');
-        const total_fee = that.data.priceAll * 100;
+        const total_fee = (that.data.priceAll + that.data.deliver_price) * 100;
+        const deliver_price = that.data.deliver_price;
         let leaveMessage = '';
         that.data.leaveMessage === undefined ? leaveMessage = '' : leaveMessage = that.data.leaveMessage;
         if (openid === undefined) {
@@ -141,10 +142,14 @@ Page({
                                             receiver: that.data.userName,
                                             address: that.data.address,
                                             leaveMessage: leaveMessage,
-                                            sellerId: token
+                                            sellerId: token,
+                                            deliver_price: deliver_price
                                         },
                                         success: function (res) {
                                             orderlist.push(res.data.data.id);
+                                        },
+                                        fail: function () {
+
                                         }
                                     })
                                 }
@@ -229,35 +234,86 @@ Page({
         const provinceName = that.data.provinceName;
         let deliverPrice_nums = 0
         let deliverPrice_price = 0
+        const deliverPrice_price_all = []
         paylist.forEach(function (val, key) {
             deliverPrice_nums += val.nums
         })
-        // console.log(deliverPrice_nums)
         for (let i = 0; i < paylist.length; i++) {
-            wx.request({
-                url: localhost + '/deliver/getTemplate',
-                data: {
-                    sellerId: token,
-                    dname: paylist[i].dname
-                },
-                success: function (res) {
-                    const provinceName = that.data.provinceName
-                    const content = res.data.data
-                    console.log(provinceName)
-                    for (let k = 1; k < content.length; k++) {
-                        for (let j = 0; j < content[k].destination.split(',').length; j++) {
-                            if (provinceName === content[k].destination.split(',')[j]) {
-                                console.log(k)
-                                content[k].account > deliverPrice_nums ? deliverPrice_price = content[k].price :
-                                    deliverPrice_price = content[k].price + (deliverPrice_nums - account) / (content[k].more_account * content[k].more_price)
-
+            if (paylist[i].dname !== null) {
+                wx.request({
+                    url: localhost + '/deliver/getTemplate',
+                    data: {
+                        sellerId: token,
+                        dname: paylist[i].dname
+                    },
+                    success: function (res) {
+                        if (res.data.message === "信息不存在") {
+                            deliverPrice_price_all.push(0)
+                            Math.max.apply(null, deliverPrice_price_all) === 0 ?
+                                that.setData({
+                                    deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                                    deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                                    deliver_price_hidden: false
+                                }) : that.setData({
+                                    deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                                    deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                                    deliver_price_hidden: true
+                                })
+                        } else {
+                            const provinceName = that.data.provinceName
+                            const content = res.data.data
+                            for (let k = 1; k < content.length; k++) {
+                                let destination = content[k].destination.split('，');
+                                for (let j = 0; j < destination.length; j++) {
+                                    if (provinceName === destination[j]) {
+                                        content[k].account > deliverPrice_nums ? deliverPrice_price = content[k].price :
+                                            deliverPrice_price = content[k].price + (deliverPrice_nums - content[k].account) * (content[k].more_price / content[k].more_account)
+                                        deliverPrice_price_all.push(deliverPrice_price)
+                                        Math.max.apply(null, deliverPrice_price_all) === 0 ?
+                                            that.setData({
+                                                deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                                                deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                                                deliver_price_hidden: false
+                                            }) : that.setData({
+                                                deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                                                deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                                                deliver_price_hidden: true
+                                            })
+                                        return false
+                                    } else {
+                                        content[0].account > deliverPrice_nums ? deliverPrice_price = content[0].price :
+                                            deliverPrice_price = content[0].price + (deliverPrice_nums - content[0].account) * (content[0].more_price / content[0].more_account)
+                                        deliverPrice_price_all.push(deliverPrice_price)
+                                        Math.max.apply(null, deliverPrice_price_all) === 0 ?
+                                            that.setData({
+                                                deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                                                deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                                                deliver_price_hidden: false
+                                            }) : that.setData({
+                                                deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                                                deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                                                deliver_price_hidden: true
+                                            })
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            })
+                })
+            } else {
+                deliverPrice_price_all.push(0)
+                Math.max.apply(null, deliverPrice_price_all) === 0 ?
+                    that.setData({
+                        deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                        deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                        deliver_price_hidden: false
+                    }) : that.setData({
+                        deliver_price: Math.max.apply(null, deliverPrice_price_all),
+                        deliverprice: Math.max.apply(null, deliverPrice_price_all).toFixed(2),
+                        deliver_price_hidden: true
+                    })
+            }
         }
-
     },
 
     /**
@@ -367,21 +423,18 @@ Page({
                     },
                     success: function (res) {
                         let content = res.data.data;
-
-                        payList.push({ nums: paylist[i].nums, productId: paylist[i].productId, pid: paylist[i].pid, imgurl: content.indexImages.split(",")[0], con: content.pname, deliverPrice: (content.deliverPrice - 0).toFixed(2) });
-
+                        payList.push({ nums: paylist[i].nums, productId: paylist[i].productId, pid: paylist[i].pid, imgurl: content.indexImages.split(",")[0], con: content.pname });
                         for (let k = 0; k < content.produtsTypes.length; k++) {
                             if (paylist[i].productId === content.produtsTypes[k].id) {
-                                payList[i].priceNew = content.produtsTypes[k].priceNew;
+                                payList[i].priceNew = content.produtsTypes[k].discountPrice;
                                 payList[i].dname = content.dname;
-                                payList[i].priceOld === null ? "" : content.produtsTypes[k].priceOld;
+                                content.produtsTypes[k].priceNew === null ? payList[i].priceOld = "" : payList[i].priceOld = content.produtsTypes[k].priceNew;
                             }
                         }
-
-                        priceAll += (payList[i].priceNew - 0) * (paylist[i].nums - 0) + (payList[i].deliverPrice - 0)
+                        priceAll += (payList[i].priceNew - 0) * (paylist[i].nums - 0)
                         that.setData({
                             payList: payList,
-                            priceAll: priceAll.toFixed(2)
+                            priceAll: priceAll
                         })
                         stu = 0;
                         i === paylist.length - 1 ? clearInterval(set) : ''
@@ -392,7 +445,6 @@ Page({
         }, 1)
         this.deliverPrice()
         wx.hideLoading();
-
         setTimeout(function () {
             wx.hideLoading();
         }, 3000)

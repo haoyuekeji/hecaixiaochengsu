@@ -45,6 +45,7 @@ Page({
     NumJian: function (e) {
         wx.showLoading({
             title: '加载中',
+            mask: true
         })
         const index = e.target.dataset.index;
         const that = this;
@@ -52,85 +53,100 @@ Page({
         let nums_ = cons[index].nums;
         let color = cons[index].color;
         let nums = 0;
-        if (nums_ === 1) {
-            wx.hideLoading();
-            color = '#cccccc';
-            wx.showToast({
-                title: '数量最少为1',
-                image: '../../images/icon/fail.png',
-                mask: true,
-                duration: 1000
-            })
-            return false
-        } else {
-            color = '#000000';
-            nums = -1
-            wx.request({
-                url: localhost + "/shopCar/save",
-                data: {
-                    proId: cons[index].pid,
-                    openId: that.data.openid,
-                    sellerId: token,
-                    amount: nums,
-                    "produtsType.id": that.data.cons[index].productId
-                },
-                success: function (res) {
-                    if (res.statusCode === 200) {
-                        nums_ <= 1 ? nums_ = 1 : nums_--;
-                        nums_ === 1 ? color = '#cccccc' : color = '#000000';
-                        cons[index].color = color;
-                        cons[index].nums = nums_;
-                        that.setData({
-                            cons: cons
-                        })
+        var stu = true
+        if (stu) {
+            if (nums_ === 1) {
+                stu = false
+                wx.hideLoading();
+                color = '#cccccc';
+                wx.showToast({
+                    title: '数量最少为1',
+                    image: '../../images/icon/fail.png',
+                    mask: true,
+                    duration: 1000
+                })
+                stu = true
+                return false
+            } else {
+                stu = false
+                color = '#000000';
+                nums = -1
+                wx.request({
+                    url: localhost + "/shopCar/save",
+                    data: {
+                        proId: cons[index].id,
+                        openId: that.data.openid,
+                        sellerId: token,
+                        amount: nums,
+                        "produtsType.id": that.data.cons[index].productId
+                    },
+                    success: function (res) {
+                        if (res.statusCode === 200) {
+                            nums_ <= 1 ? nums_ = 1 : nums_--;
+                            nums_ === 1 ? color = '#cccccc' : color = '#000000';
+                            cons[index].color = color;
+                            cons[index].nums = nums_;
+                            that.setData({
+                                cons: cons
+                            })
+                        }
+                        that.getPrice();
+                        wx.hideLoading();
+                        stu = true
                     }
-                    that.getPrice();
-                    wx.hideLoading();
-                }
-            })
-        };
+                })
+            };
+        }
     },
 
     //点击增加件数
     NumJia: function (e) {
         wx.showLoading({
             title: '加载中',
+            mask: true
         })
         const index = e.target.dataset.index;
         let cons = this.data.cons;
         let nums = cons[index].nums;
         let color = cons[index].color;
         const that = this;
-        wx.request({
-            url: localhost + "/shopCar/save",
-            data: {
-                proId: cons[index].pid,
-                openId: that.data.openid,
-                sellerId: token,
-                amount: 1,
-                "produtsType.id": that.data.cons[index].productId
-            },
-            success: function (res) {
-                if (res.statusCode === 200) {
-                    nums++;
-                    nums === 1 ? color = '#cccccc'
-                        : color = '#000000'
-                    cons[index].color = color;
-                    cons[index].nums = nums;
-                    that.setData({
-                        cons: cons
-                    })
+        var stu = true;
+        if (stu) {
+            stu = false
+            wx.request({
+                url: localhost + "/shopCar/save",
+                data: {
+                    proId: cons[index].id,
+                    openId: that.data.openid,
+                    sellerId: token,
+                    amount: 1,
+                    "produtsType.id": that.data.cons[index].productId
+                },
+                success: function (res) {
+                    if (res.statusCode === 200) {
+                        nums++;
+                        nums === 1 ? color = '#cccccc'
+                            : color = '#000000'
+                        cons[index].color = color;
+                        cons[index].nums = nums;
+                        that.setData({
+                            cons: cons
+                        })
+                    }
+                    that.getPrice();
+                    wx.hideLoading();
+                    stu = true
                 }
-                that.getPrice();
-                wx.hideLoading();
-            }
-        })
+            })
+        }
+
     },
 
     //点击删除商品
     delet: function (e) {
         wx.showLoading({
             title: '加载中',
+            mask: true
         });
         const that = this;
         const id = e.target.dataset.id;
@@ -148,22 +164,25 @@ Page({
                     openId: openid,
                 },
                 success: function (res) {
-                    if (res.statusCode === 200) {
+                    if (res.data.message === "操作成功") {
                         cons.splice(index, 1);
                         that.setData({
                             cons: cons,
                             id: 'del'
                         });
+                        wx.hideLoading();
                         wx.showToast({
                             title: '成功删除商品！',
                             icon: 'success',
                             mask: true,
-                            duration: 1000
+                            duration: 1500
                         })
                     }
                     that.getPrice();
                     that.SeclectAll();
-                    wx.hideLoading();
+                },
+                fail: function () {
+
                 }
             })
         }, 500)
@@ -274,10 +293,15 @@ Page({
                 const content = res.data.data;
                 const cons = [];
                 let color = '';
+                for (let k = content.length - 1; k >= 0; k--) {
+                    if (content[k].productses.length === 0) {
+                        content.splice(k, 1)
+                    }
+                }
                 for (let i = 0; i < content.length; i++) {
                     let imgurl = content[i].productses[0].indexImages.split(',')[0];
                     let con = content[i].productses[0].pname;
-                    let price = content[i].shopCarDetails[0].produtsType.priceNew;
+                    let price = content[i].productses[0].produtsTypes[0].discountPrice;
                     let nums = content[i].shopCarDetails[0].amount;
                     nums == 1 ? color = '#ccc' : color = '#000';
                     let id = content[i].id;
@@ -289,7 +313,8 @@ Page({
                     cons.push({ imgurl: imgurl, con: con, price: price, nums: nums, Seclect: Seclect, color: color, id: pid, pid: id, productId: productId, size: size, productcolor: productcolor, dname: dname })
                 }
                 that.setData({
-                    cons: cons
+                    cons: cons,
+                    SeclectAll: false
                 })
                 that.getPrice();
                 wx.hideLoading()

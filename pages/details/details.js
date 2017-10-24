@@ -1,13 +1,16 @@
 const app = getApp();
 const localhost = app.localhost.localhost;
 const token = app.token.token;
+const QQMAP = require('../../utils/qqmap.min.js');
+const qqmap_demo = new QQMAP({
+    key: 'YV4BZ-S3EKG-EYLQP-ISBKQ-GTOXE-G6BPR'
+})
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        // size: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
         indicatorDots: true,
         autoplay: true,
         interval: 3500,
@@ -16,7 +19,8 @@ Page({
         background: '#cdcdcd',
         nums: 1,
         price: 0,
-        stu: true
+        stu: true,
+        deliver_price_hidden: true
     },
 
     NumJian: function () {
@@ -54,7 +58,9 @@ Page({
         })
     },
 
-
+    guige_details: function () {
+        return false
+    },
 
     ChangeColor: function (e) {
         const that = this;
@@ -113,7 +119,7 @@ Page({
 
                             if (res.statusCode === 200) {
                                 wx.showToast({
-                                    title: '添加购物车成功！',
+                                    title: '添加成功！',
                                     icon: 'success',
                                     mask: true,
                                     duration: 1200
@@ -133,9 +139,6 @@ Page({
                 showCancel: false
             })
         }
-
-
-
     },
 
 
@@ -143,9 +146,10 @@ Page({
         const id = this.data.id;
         const productId = this.data.productId;
         const nums = this.data.nums;
+        const dname = this.data.dname;
         const paylist = [];
         if (id !== '' && id !== undefined && productId !== "" && productId !== undefined) {
-            paylist.push({ pid: productId, productId: id, nums: nums });
+            paylist.push({ pid: productId, productId: id, nums: nums, dname: dname });
             wx.navigateTo({
                 url: '../sure/sure?paylist=' + JSON.stringify(paylist)
             })
@@ -310,7 +314,103 @@ Page({
                 })
             }
         }
-
+    },
+    deliverPrice: function (dname) {
+        const that = this;
+        var deliverPrice_price = 0
+        const deliverPrice_price_all = []
+        if (dname !== null) {
+            wx.getLocation({
+                success: function (res) {
+                    qqmap_demo.reverseGeocoder({
+                        location: {
+                            latitude: res.latitude,
+                            longitude: res.longitude
+                        },
+                        success: function (res) {
+                            const provinceName = res.result.address_component.province
+                            that.setData({
+                                provinceName: res.result.address_component.district
+                            })
+                            wx.request({
+                                url: localhost + '/deliver/getTemplate',
+                                data: {
+                                    sellerId: token,
+                                    dname: dname
+                                },
+                                success: function (res) {
+                                    if (res.data.message === "信息不存在") {
+                                        deliverPrice_price = 0
+                                        that.setData({
+                                            deliverPrice_price: deliverPrice_price.toFixed(2),
+                                        })
+                                    } else {
+                                        const content = res.data.data
+                                        for (let k = 1; k < content.length; k++) {
+                                            let destination = content[k].destination.split('，');
+                                            for (let j = 0; j < destination.length; j++) {
+                                                if (provinceName === destination[j]) {
+                                                    deliverPrice_price = content[k].price
+                                                    that.setData({
+                                                        deliverPrice_price: deliverPrice_price.toFixed(2),
+                                                    })
+                                                    return false
+                                                } else {
+                                                    deliverPrice_price = content[0].price
+                                                    that.setData({
+                                                        deliverPrice_price: deliverPrice_price.toFixed(2),
+                                                    })
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                fail: function () {
+                                    deliverPrice_price = 0
+                                    that.setData({
+                                        deliverPrice_price: deliverPrice_price.toFixed(2)
+                                    })
+                                    wx.showModal({
+                                        title: '提示',
+                                        content: '网络信号弱，请稍后再试！',
+                                    })
+                                }
+                            })
+                        },
+                        fail: function (res) {
+                            deliverPrice_price = 0
+                            that.setData({
+                                deliverPrice_price: deliverPrice_price.toFixed(2),
+                                provinceName: '无法获取位置信息'
+                            })
+                        }
+                    })
+                },
+                fail: function (res) {
+                    deliverPrice_price = 0
+                    that.setData({
+                        deliverPrice_price: deliverPrice_price.toFixed(2),
+                        provinceName: '无法获取位置信息'
+                    })
+                    if (res.errMsg === 'getLocation:fail auth deny') {
+                        wx.showModal({
+                            title: '提示',
+                            content: '取消后将无法提示邮费信息，您可以点击个人中心进行设置或点击邮费查看详情！',
+                        })
+                    }
+                }
+            })
+        } else {
+            deliverPrice_price = 0
+            that.setData({
+                deliverPrice_price: deliverPrice_price.toFixed(2),
+            })
+        }
+    },
+    express: function () {
+        wx.navigateTo({
+            url: '../deliver_durection/deliver_durection?id=' + this.data.options.id,
+        })
     },
     /**
   * 生命周期函数--监听页面加载
@@ -338,7 +438,6 @@ Page({
                         produtsTypes.splice(q, 1);
                     }
                 }
-
                 const imgUrls = [];
                 const imgurl = [];
                 const size = [];
@@ -350,11 +449,12 @@ Page({
                 var monthSale = 0;
                 const img = content.images.split(',');
                 const imgs = content.indexImages.split(',');
+                const dname = content.dname;
                 content.monthSale === null ? monthSale = 0 : monthSale = content.monthSale
                 // img.pop();
                 const con = content.pname;
-                const priceNew = content.produtsTypes[0].priceNew;
-                let priceOld = content.produtsTypes[0].priceOld;
+                const priceNew = content.produtsTypes[0].discountPrice;
+                let priceOld = content.produtsTypes[0].priceNew;
                 priceOld === null ? that.setData({ priceOldstu: false }) : that.setData({ priceOldstu: true });
                 for (let i = 0; i < imgs.length; i++) {
                     imgUrls.push(imgs[i])
@@ -386,14 +486,14 @@ Page({
                             }
                             kucun += produtsTypes[q].amount;
                             price = produtsTypes[q].priceNew;
-                            details[w].size.push({ size: produtsTypes[q].size, priceNew: produtsTypes[q].priceNew, amount: produtsTypes[q].amount, id: produtsTypes[q].id, productId: produtsTypes[q].productId });
+                            details[w].size.push({ size: produtsTypes[q].size, priceNew: produtsTypes[q].discountPrice, amount: produtsTypes[q].amount, id: produtsTypes[q].id, productId: produtsTypes[q].productId });
 
                         }
                     }
                     details[w].kucun = kucun;
                     details[w].priceNew = price;
                 }
-
+                that.deliverPrice(dname)
                 that.setData({
                     imgUrls: imgUrls,
                     con: con,
@@ -407,7 +507,8 @@ Page({
                     details: details,
                     pid: options.id,
                     monthSale: monthSale,
-                    size: size_
+                    size: size_,
+                    dname: dname
                 })
                 wx.hideLoading();
             }

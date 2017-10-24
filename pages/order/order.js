@@ -95,12 +95,10 @@ Page({
         wx.showLoading({
             title: '加载中',
         })
-
         const that = this;
         const index = e.target.dataset.index;
         const id = e.target.dataset.id;
         const price = e.target.dataset.price;
-        const amount = e.target.dataset.amount;
         const openid = wx.getStorageSync('openid');
         let cons_ = that.data.cons;
         wx.request({
@@ -118,8 +116,7 @@ Page({
                             },
                             success: function (res) {
                                 const session_key = JSON.parse(res.data.data).session_key;
-                                const total_fee = (price * amount * 100) - 0;
-
+                                const total_fee = (price - 0) * 100;
                                 wx.request({
                                     url: localhost + '/pay/do',
                                     data: {
@@ -201,7 +198,6 @@ Page({
                     title: '已取消',
                     icon: 'success',
                     duration: 500
-
                 })
             }
         })
@@ -294,7 +290,7 @@ Page({
                     let con = data[i].products[0].pname;
                     let color = data[i].produtsTypes[0].color;
                     let size = data[i].produtsTypes[0].size;
-                    let priceNew = data[i].produtsTypes[0].priceNew;
+                    let priceNew = data[i].totalPrice.toFixed(2);
                     let id = data[i].id;
                     let dname = data[i].deliver.dname;
                     let dcode = data[i].deliver.dcode;
@@ -353,7 +349,7 @@ Page({
                 let con = data[i].products[0].pname;
                 let color = data[i].produtsTypes[0].color;
                 let size = data[i].produtsTypes[0].size;
-                let priceNew = data[i].produtsTypes[0].priceNew;
+                let priceNew = data[i].totalPrice.toFixed(2);
                 let id = data[i].id;
                 cons.push({ imgurl: imgurl, con: con, color: color, size: size, priceNew: priceNew, id: id, amount: data[i].amount })
             }

@@ -33,22 +33,31 @@
                     </view>
                 </view>
             </view>
-            <view class="guige padding" bindtap="ChooseGuige">
-                <view class="price-con">配送方式</view>
-                <view class="price-con">
-                    <text> 快递 {{item.deliverPrice}}</text>
-                </view>
-            </view>
         </block>
+        <view class="guige padding" bindtap="ChooseGuige">
+            <view class="price-con">配送方式：快递</view>
+            <view class="price-con">
+                <text wx:if='{{deliver_price_hidden}}'> 快递费: {{deliverprice}}</text>
+                <text wx:else>快递：免邮</text>
+            </view>
+        </view>
         <view class='leavemessage'>
             <textarea placeholder='买家留言：' class='textarea' bindconfirm="save" bindinput='input' bindblur="save"></textarea>
             <view>{{worder_number}}/140</view>
         </view>
     </view>
+    <wxs module="m1">
+        var msg = function(nums1, nums2) {
+            var nums = (nums1 + nums2) - 0
+            nums.toFixed(2)
+            return nums
+        }
+        module.exports.msg = msg;
+    </wxs>
     <view class="footer">
         <view class="footer-price">实付：
             <text>￥</text>
-            <label>{{priceAll}}</label>
+            <label>{{m1.msg(priceAll,deliver_price)}}</label>
         </view>
         <view class="footer-submit" bindtap='pay'>确认支付</view>
     </view>

@@ -31,7 +31,7 @@
                         <text>{{item.con}}</text>
                         <view class='details'>
                             <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
-                            <text>￥{{item.priceNew*item.amount}}</text>
+                            <text>￥{{item.priceNew}}</text>
                         </view>
                         <view class='diffent'>
                             <view bindtap='cancle' class='background-cancle' data-id='{{item.id}}' data-index="{{index}}">取消订单</view>
@@ -53,7 +53,7 @@
                         <text>{{item.con}}</text>
                         <view class='details'>
                             <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
-                            <text>￥{{item.priceNew*item.amount}}</text>
+                            <text>￥{{item.priceNew}}</text>
                         </view>
                         <view class='diffent'>
                             <view bindtap='hint'>提醒发货</view>
@@ -74,7 +74,7 @@
                             <text>{{item.con}}</text>
                             <view class='details'>
                                 <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
-                                <text>￥{{item.priceNew*item.amount}}</text>
+                                <text>￥{{item.priceNew}}</text>
                             </view>
                             <view class='diffent'>
                                 <view bindtap='sure' data-id='{{item.id}}' data-index="{{index}}">确定收货</view>
@@ -106,7 +106,7 @@
                             <text>{{item.con}}</text>
                             <view class='details'>
                                 <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
-                                <text>￥{{item.priceNew*item.amount}}</text>
+                                <text>￥{{item.priceNew}}</text>
                             </view>
                             <view class='diffent'>
                                 <view bindtap='delet' class='background-cancle' data-id='{{item.id}}' data-index="{{index}}">删除</view>

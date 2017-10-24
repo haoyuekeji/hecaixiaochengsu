@@ -6,7 +6,8 @@
         "pages/goods/goods",
         "pages/order/order",
         "pages/details/details",
-        "pages/sure/sure"
+        "pages/sure/sure",
+        "pages/deliver_durection/deliver_durection"
     ],
     "window": {
         "backgroundTextStyle": "light",

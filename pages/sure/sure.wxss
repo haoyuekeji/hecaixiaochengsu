@@ -58,6 +58,7 @@ page {
     width: 100%;
     overflow: hidden;
     background: #fff;
+    margin-bottom: 15rpx;
 }
 
 .con-left {
@@ -119,15 +120,16 @@ page {
     color: #000;
 }
 
-.old-price {
-    text-decoration: online;
-}
-
 .old-price, .nums {
     font-size: 20rpx;
     color: #ccc;
     line-height: 40rpx;
     margin-left: 20rpx;
+}
+
+.old-price {
+    text-decoration: line-through;
+    font-size: 25rpx;
 }
 
 .footer {
@@ -201,7 +203,7 @@ label {
 
 .leavemessage {
     width: 100%;
-    height: auto;
+    height: 90rpx;
     padding-bottom: 50rpx;
     background: #fff;
     position: relative;
@@ -218,6 +220,7 @@ label {
 textarea {
     background: #fff;
     width: 95%;
+    height: 80rpx;
     margin: 0 auto;
     padding: 15rpx 0;
     box-sizing: border-box;

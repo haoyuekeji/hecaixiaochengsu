@@ -98,7 +98,7 @@ page {
 .scroll-con-details {
     height: 300rpx;
     width: 100%;
-    padding: 0 20rpx;
+    padding: 0 25rpx;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -144,7 +144,6 @@ page {
 .details {
     height: auto;
     width: 100%;
-    padding-left: 15rpx;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -154,18 +153,18 @@ page {
 
 .details view {
     height: auto;
-    width: 70%;
+    width: 100%;
     color: #999;
+    padding-left: 15rpx;
     font-size: 25rpx;
     display: inline-block;
 }
 
 .details text {
     height: 40rpx;
-    width: 25%;
+    width: 100%;
     color: #f40000;
     font-weight: 500;
-    margin-top: 55rpx;
 }
 
 .diffent {
@@ -173,6 +172,7 @@ page {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    margin-top: 55rpx;
 }
 
 .diffent view {

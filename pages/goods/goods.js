@@ -45,7 +45,7 @@ Page({
                     let ptypeName = content[i].ptypeName;
                     let img = content[i].indexImages.split(',')[0];
                     content[i].monthSale === null ? monthSale = 0 : monthSale = content[i].monthSale
-                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].priceNew, id: content[i].id, monthSale: monthSale });
+                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].discountPrice, id: content[i].id, monthSale: monthSale });
                     if (!json[ptypeName]) {
                         nav.push(ptypeName);
                         json[ptypeName] = 1;
@@ -81,7 +81,7 @@ Page({
                 for (let i = 0; i < content.length; i++) {
                     let img = content[i].indexImages.split(',')[0];
                     content[i].monthSale === null ? monthSale = 0 : monthSale = content[i].monthSale;
-                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].priceNew, id: content[i].id, monthSale: monthSale });
+                    cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].discountPrice, id: content[i].id, monthSale: monthSale });
 
                 }
                 cons.sort(that.sortmonthSale).reverse()

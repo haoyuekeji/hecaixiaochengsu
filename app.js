@@ -16,10 +16,10 @@ App({
                 sellerId: that.token.token
             },
             fail: function (res) {
-              wx.showModal({
-                  title: '提示',
-                  content: '网络可能存在波动，请稍后再试！',
-              })
+                wx.showModal({
+                    title: '提示',
+                    content: '网络信号弱，请稍后再试！',
+                })
             }
         });
         wx.login({
@@ -71,10 +71,10 @@ App({
         userInfo: null,
     },
     localhost: {
-        localhost: 'http://localhost:80'
+        localhost: 'https://www.cslapp.com'
     },
     token: {
-        token: 1
+        token: 3
     },
     appid: {
         appid: 'wxe46b9aa1b768e5fe'
