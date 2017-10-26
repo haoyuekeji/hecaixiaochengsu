@@ -319,7 +319,7 @@ Page({
         const that = this;
         var deliverPrice_price = 0
         const deliverPrice_price_all = []
-        if (dname !== null) {
+        if (dname !== null && dname !== '') {
             wx.getLocation({
                 success: function (res) {
                     qqmap_demo.reverseGeocoder({
@@ -349,6 +349,7 @@ Page({
                                         for (let k = 1; k < content.length; k++) {
                                             let destination = content[k].destination.split('，');
                                             for (let j = 0; j < destination.length; j++) {
+                                                console.log(provinceName)
                                                 if (provinceName === destination[j]) {
                                                     deliverPrice_price = content[k].price
                                                     that.setData({

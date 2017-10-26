@@ -52,7 +52,7 @@
             <view class="chima">
                 <label>颜色</label>
                 <view class="chima-details">
-                    <view wx:for="{{color}}" catchtap='ChangeColor' wx:key="index" data-index='{{index}}' data-name='{{item}}' class='chima-details-view {{index===Colorindex?"imgbg":""}}'>{{item}}</view>
+                    <view wx:for="{{color}}" catchtap='ChangeColor' wx:key="index" data-index='{{index}}' data-name='{{item}}' class='yanse-details-view {{index===Colorindex?"imgbg":""}}'>{{item}}</view>
                 </view>
             </view>
             <view class="chima">

@@ -239,7 +239,7 @@ Page({
             deliverPrice_nums += val.nums
         })
         for (let i = 0; i < paylist.length; i++) {
-            if (paylist[i].dname !== null) {
+            if (paylist[i].dname !== null && paylist[i].dname !== '') {
                 wx.request({
                     url: localhost + '/deliver/getTemplate',
                     data: {
@@ -426,7 +426,7 @@ Page({
                         payList.push({ nums: paylist[i].nums, productId: paylist[i].productId, pid: paylist[i].pid, imgurl: content.indexImages.split(",")[0], con: content.pname });
                         for (let k = 0; k < content.produtsTypes.length; k++) {
                             if (paylist[i].productId === content.produtsTypes[k].id) {
-                                payList[i].priceNew = content.produtsTypes[k].discountPrice;
+                                payList[i].priceNew = content.produtsTypes[k].discountPrice.toFixed(2);
                                 payList[i].dname = content.dname;
                                 content.produtsTypes[k].priceNew === null ? payList[i].priceOld = "" : payList[i].priceOld = content.produtsTypes[k].priceNew;
                             }
@@ -434,7 +434,7 @@ Page({
                         priceAll += (payList[i].priceNew - 0) * (paylist[i].nums - 0)
                         that.setData({
                             payList: payList,
-                            priceAll: priceAll
+                            priceAll: priceAll.toFixed(2)
                         })
                         stu = 0;
                         i === paylist.length - 1 ? clearInterval(set) : ''

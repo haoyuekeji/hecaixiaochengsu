@@ -48,9 +48,8 @@
     </view>
     <wxs module="m1">
         var msg = function(nums1, nums2) {
-            var nums = (nums1 + nums2) - 0
-            nums.toFixed(2)
-            return nums
+            var nums = (nums1 - 0 + nums2 - 0)
+            return nums.toFixed(2)
         }
         module.exports.msg = msg;
     </wxs>
