@@ -7,7 +7,7 @@ page {
 }
 
 .address {
-    height: 200rpx;
+    min-height: 200rpx;
     width: 100%;
     background: #fff;
     margin-bottom: 20rpx;
@@ -26,14 +26,14 @@ page {
 }
 
 .address-con {
-    height: 160rpx;
+    height: auto;
     width: 710rpx;
     margin-left: 20rpx;
     margin-top: 20rpx;
 }
 
 .address-con-top, .address-con-footer {
-    height: 80rpx;
+    height: auto;
     width: 710rpx;
     margin-left: 15rpx;
     font-size: 30rpx;

@@ -55,6 +55,11 @@ Page({
             }
         })
     },
+    cjorder: function () {
+        wx.navigateTo({
+            url: '../../pages/isLuckDraw/isLuckDraw',
+        })
+    },
     setting: function () {
         wx.openSetting({
 
@@ -68,7 +73,7 @@ Page({
         const index = e.target.dataset.index;
         this.setData({
             icon: [
-                { url: "../../images/icon/waitting-pay.png", text: "待付款" },
+                { url: '../../images/icon/waitting-pay.png', text: "待付款" },
                 { url: '../../images/icon/waitting-send.png', text: "待发货" },
                 { url: '../../images/icon/wait.png', text: "待收货" },
                 { url: '../../images/icon/success.png', text: "已完成" },
@@ -82,6 +87,9 @@ Page({
         })
         this.setCons(index);
         wx.hideLoading();
+        setTimeout(function () {
+            wx.hideLoading();
+        }, 500)
     },
     getInfo: function (e) {
 
@@ -101,6 +109,9 @@ Page({
         const price = e.target.dataset.price;
         const openid = wx.getStorageSync('openid');
         let cons_ = that.data.cons;
+
+
+
         wx.request({
             url: 'https://wxapp.edeyun.cn/fujun/ip.php',
             success: function (e) {

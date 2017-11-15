@@ -1,0 +1,6 @@
+<!-- 缩放 -->
+<template name="resizePic">
+    <scroll-view class="backdrop" catchtouchmove="bindTouchMove" catchtouchend="bindTouchEnd" bindtouchstart="bindTouchStart" style="height:100%;width:100%">
+        <image catchtouchmove="bindTouchMove" bindtouchend="bindTouchEnd" bindtouchstart="bindTouchStart" style=" transform: scale({{img.baseScale}}); position:absolute; top:{{img.top}}rpx; left:{{img.left}}rpx; width:100%" mode="widthFix" class="dtl-img" src="{{img.currentSrc}}"></image>
+    </scroll-view>
+</template>

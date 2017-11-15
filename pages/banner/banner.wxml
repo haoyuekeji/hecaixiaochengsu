@@ -101,10 +101,10 @@
 </view>
 <view class='success' wx:if='{{success}}'>{{success}}</view>
 
-<!-- <view class='img-cover' wx:if='{{isCheckDtl}}' bindtap="closeResizeModal">
+<view class='img-cover' wx:if='{{isCheckDtl}}' bindtap="closeResizeModal">
     <import src="/pages/resizePicModal/resizePicModal.wxml" />
     <template is="resizePic" data="{{img}}"></template>
-</view> -->
+</view>
 <view class='share-cover' bindtap='shareShow' hidden='{{share_stu}}'>
     <view class='share-cover-all'>
         <view class='share-button'>

@@ -1,4 +1,5 @@
 //app.js
+let opid = '';
 App({
     onLaunch: function () {
         //调用API从本地缓存中获取数据
@@ -33,14 +34,7 @@ App({
                     },
                     success: function (res) {
                         const openid = JSON.parse(res.data.data).openid;
-                        //客户首次访问店铺
-                        wx.request({
-                            url: that.localhost.localhost + '/customer/loginOrReg',
-                            data: {
-                                openId: openid,
-                                sellerId: that.token.token
-                            }
-                        })
+                        opid = openid
                         //店铺访客数
                         wx.request({
                             url: that.localhost.localhost + '/dictionary/addVisitors',
@@ -61,6 +55,19 @@ App({
             wx.getUserInfo({
                 withCredentials: false,
                 success: function (res) {
+                    console.log(opid)
+                    const nickName = res.userInfo.nickName
+                    //客户首次访问店铺
+                    wx.request({
+                        url: that.localhost.localhost + '/customer/loginOrReg',
+                        data: {
+                            openId: openid,
+                            sellerId: that.token.token,
+                            wxname: wxname,
+                            wxpic: wxpic
+                        }
+                    })
+                    wx.setStorageSync("nickName", nickName)
                     that.globalData.userInfo = res.userInfo
                     typeof cb == "function" && cb(that.globalData.userInfo)
                 }

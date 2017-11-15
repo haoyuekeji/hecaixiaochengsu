@@ -1,0 +1,27 @@
+button {
+    position: fixed;
+    bottom: 0;
+}
+
+page {
+    background: rgba(0, 0, 0, 0.65);
+}
+
+canvas {
+    box-shadow: 1rpx 5rpx 60rpx 15rpx #000;
+}
+
+view {
+    height: 80rpx;
+    width: 80%;
+    font-size: 25rpx;
+    color: #fff;
+    line-height: 80rpx;
+    text-align: center;
+    border-radius: 15rpx;
+    position: fixed;
+    bottom: 3%;
+    left: 10%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid #fff;
+}

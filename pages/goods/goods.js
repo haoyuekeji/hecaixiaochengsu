@@ -37,26 +37,19 @@ Page({
             },
             success: function (res) {
                 const content = res.data.data;
-                const nav = ['全部'];
+
                 const cons = [];
-                const json = {};
+
                 var monthSale = 0;
                 for (let i = 0; i < content.length; i++) {
                     let ptypeName = content[i].ptypeName;
                     let img = content[i].indexImages.split(',')[0];
                     content[i].monthSale === null ? monthSale = 0 : monthSale = content[i].monthSale
                     cons.push({ con: content[i].pname, imgurl: img, price: content[i].produtsTypes[0].discountPrice, id: content[i].id, monthSale: monthSale });
-                    if (!json[ptypeName]) {
-                        nav.push(ptypeName);
-                        json[ptypeName] = 1;
-                    }
                 }
                 cons.sort(that.sortmonthSale).reverse()
-
                 that.setData({
-                    cons: cons,
-                    nav: nav,
-
+                    cons: cons
                 })
                 wx.hideLoading()
             }
@@ -112,7 +105,19 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        const that = this
+        wx.request({
+            url: localhost + '/ptypename/list',
+            data: {
+                sellerId: token,
+            },
+            success: function (res) {
+                const ptypename = res.data.data.ptypename
+                that.setData({
+                    nav: ptypename.split(',')
+                })
+            }
+        })
     },
 
     /**

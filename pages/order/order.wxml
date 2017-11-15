@@ -11,13 +11,16 @@
         <block wx:for="{{icon}}" wx:key="index" data-index='{{index}}' bindtap='link'>
             <view class="order-con" data-index='{{index}}' bindtap='link'>
                 <image src='{{item.url}}' data-index='{{index}}'></image>
-                <text data-index='{{index}}'>{{item.text}}</text>
+                <text data-index='{{index}}' bindtap='link'>{{item.text}}</text>
             </view>
-
         </block>
     </view>
     <view class="address" bindtap="address">
         <text>地址</text>
+        <image src="../../images/icon/come.png"></image>
+    </view>
+    <view class="address" bindtap="cjorder">
+        <text>抽奖定单</text>
         <image src="../../images/icon/come.png"></image>
     </view>
     <view class="scroll">

@@ -7,7 +7,10 @@
         "pages/order/order",
         "pages/details/details",
         "pages/sure/sure",
-        "pages/deliver_durection/deliver_durection"
+        "pages/deliver_durection/deliver_durection",
+        "pages/banner/banner",
+        "pages/phonto/phonto",
+        "pages/isLuckDraw/isLuckDraw"
     ],
     "window": {
         "backgroundTextStyle": "light",

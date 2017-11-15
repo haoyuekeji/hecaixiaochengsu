@@ -3,30 +3,30 @@
         <image src="../../images/icon/shopping-car.png"></image>
         <view>您的购车竟然是空的，快去购买吧！</view>
     </view>
-    <block wx:for="{{cons}}" wx:key="index" >
+    <block wx:for="{{cons}}" wx:key="index">
         <scroll-view class="car" scroll-x="true" scroll-into-view="{{id}}" scroll-with-animation="true">
-            <view class="car-left" data-index="{{index}}" id="del">
-                <icon type="success" size="23" color="#eb6877" wx:if="{{item.Seclect}}" bindtap="SeclectList" data-index="{{index}}" />
-                <icon type="circle" size="23" color="#eb6877" bindtap="test" data-index="{{index}}" bindtap="SeclectList" />
+            <view class="car-left" data-index="{{index}}" id="del" data-active="{{item.active}}">
+                <icon type="success" size="23" color="#eb6877" wx:if="{{item.Seclect}}" bindtap="SeclectList" data-index="{{index}}" data-active="{{item.active}}" />
+                <icon type="circle" size="23" color="#eb6877" bindtap="test" data-index="{{index}}" bindtap="SeclectList" data-active="{{item.active}}" />
             </view>
-            <view class="car-img" data-id='{{item.id}}' bindtap='link'>
-                <image src="{{item.imgurl}}" data-id='{{item.id}}'></image>
+            <view class="car-img" data-id='{{item.id}}' bindtap='link' data-active="{{item.active}}">
+                <image src="{{item.imgurl}}" data-id='{{item.id}}' data-active="{{item.active}}"></image>
             </view>
 
-            <view class="car-con" data-id='{{item.id}}' bindtap='link'>
-                <block  data-id='{{item.id}}' >
-                    <text id="car-con-text" data-id='{{item.id}}' >{{item.con}}</text>
+            <view class="car-con" data-id='{{item.id}}' data-active="{{item.active}}" bindtap='link'>
+                <block data-id='{{item.id}}'>
+                    <text id="car-con-text" data-active="{{item.active}}" data-id='{{item.id}}'>{{item.con}}</text>
                 </block>
-                 <view class='details' data-id='{{item.id}}'>
-                    <view data-id='{{item.id}}' >颜色:{{item.productcolor}} 尺码：{{item.size}}</view>
-                </view> 
-                <view class="car-price" data-id='{{item.id}}'>
+                <view class='details' data-active="{{item.active}}" data-id='{{item.id}}'>
+                    <view data-id='{{item.id}}' data-active="{{item.active}}">颜色:{{item.productcolor}} 尺码：{{item.size}}</view>
+                </view>
+                <view class="car-price" data-id='{{item.id}}' data-active="{{item.active}}">
                     <text data-id='{{item.id}}'>￥</text>{{item.price}}
                 </view>
-                <view class="car-num" data-id='{{item.id}}'>
-                    <view style="border-left:{{style}};color:{{item.color}}" catchtap='NumJian' data-index="{{index}}" data-id='{{item.id}}'>-</view>
+                <view class="car-num" data-id='{{item.id}}' data-active="{{item.active}}">
+                    <view style="border-left:{{style}};color:{{item.color}}" catchtap='NumJian' data-index="{{index}}" data-id='{{item.id}}' data-active="{{item.active}}">-</view>
                     <view>{{item.nums}}</view>
-                    <view catchtap='NumJia' data-id='{{item.id}}' data-index="{{index}}">+</view>
+                    <view catchtap='NumJia' data-id='{{item.id}}' data-index="{{index}}" data-active="{{item.active}}">+</view>
                 </view>
             </view>
             <view class="car-right" bindtap="delet" data-index="{{index}}" data-id="{{item.pid}}" bindscroll='scroll'>

@@ -110,7 +110,6 @@ Page({
         const id = this.data.id;
         const productId = this.data.productId;
         const details = that.data.details;
-        const wxname = wx.getStorageSync('nickName')
         if (id !== '' && id !== undefined && productId !== "" && productId !== undefined) {
             try {
                 var value = wx.getStorageSync('openid')
@@ -123,8 +122,7 @@ Page({
                             proId: that.data.productId,
                             sellerId: token,
                             amount: that.data.nums,
-                            "produtsType.id": that.data.id,
-                            wxname: wxname
+                            "produtsType.id": that.data.id
                         },
                         success: function (res) {
                             if (res.statusCode === 200) {
@@ -132,14 +130,14 @@ Page({
                                     title: '添加成功！',
                                     icon: 'success',
                                     mask: true,
-                                    duration: 800
+                                    duration: 1200
                                 })
                             }
                             setTimeout(function () {
                                 wx.switchTab({
                                     url: '../../pages/car/car',
                                 })
-                            }, 800)
+                            }, 1200)
                         }
                     })
                 }
@@ -163,25 +161,15 @@ Page({
         const nums = this.data.nums;
         const dname = this.data.dname;
         const paylist = [];
-        const isLuckDraw = this.data.isLuckDraw;
-        const isLuckDrawEnd = this.data.isLuckDrawEnd;
-        if (isLuckDrawEnd !== true) {
-            if (id !== '' && id !== undefined && productId !== "" && productId !== undefined) {
-                paylist.push({ pid: productId, productId: id, nums: nums, dname: dname, isLuckDraw: isLuckDraw });
-                wx.navigateTo({
-                    url: '../sure/sure?paylist=' + JSON.stringify(paylist)
-                })
-            } else {
-                wx.showModal({
-                    title: '提示',
-                    content: '有信息没选中！',
-                    showCancel: false
-                })
-            }
+        if (id !== '' && id !== undefined && productId !== "" && productId !== undefined) {
+            paylist.push({ pid: productId, productId: id, nums: nums, dname: dname });
+            wx.navigateTo({
+                url: '../sure/sure?paylist=' + JSON.stringify(paylist)
+            })
         } else {
             wx.showModal({
                 title: '提示',
-                content: '活动已结束！',
+                content: '有信息没选中！',
                 showCancel: false
             })
         }
@@ -408,7 +396,7 @@ Page({
                             }
                         },
                         fail: function (res) {
-                            deliverPrice_price = '点击查看'
+                            deliverPrice_price = "点击查看"
                             that.setData({
                                 deliverPrice_price: deliverPrice_price,
                                 provinceName: '无法获取位置信息'
@@ -417,7 +405,7 @@ Page({
                     })
                 },
                 fail: function (res) {
-                    deliverPrice_price = '点击查看'
+                    deliverPrice_price = "点击查看"
                     that.setData({
                         deliverPrice_price: deliverPrice_price,
                         provinceName: '无法获取位置信息'
@@ -475,7 +463,7 @@ Page({
     creatPicture: function () {
         const that = this
         wx.navigateTo({
-            url: '../../pages/phonto/phonto?id=' + that.data.options.id,
+            url: '../../pages/phonto/phonto?id=' + that.data.id,
         })
     },
     /**
@@ -492,7 +480,7 @@ Page({
         wx.request({
             url: localhost + '/seller/pro/findOne',
             data: {
-                pid: options.id,
+                pcode: options.id,
                 token: token
             },
             success: function (res) {
@@ -516,13 +504,12 @@ Page({
                 const img = content.images.split(',');
                 const imgs = content.indexImages.split(',');
                 const dname = content.dname;
+                const id = content.id;
                 content.monthSale === null ? monthSale = 0 : monthSale = content.monthSale
                 // img.pop();
                 const con = content.pname;
                 const priceNew = content.produtsTypes[0].discountPrice;
                 let priceOld = content.produtsTypes[0].priceNew;
-                let isLuckDraw = content.isLuckDraw;
-                let isLuckDrawEnd = content.isLuckDrawEnd;
                 priceOld === null ? that.setData({ priceOldstu: false }) : that.setData({ priceOldstu: true });
                 for (let i = 0; i < imgs.length; i++) {
                     imgUrls.push(imgs[i])
@@ -579,8 +566,7 @@ Page({
                     size: size_,
                     dname: dname,
                     imgurl_length: imgurl_length,
-                    isLuckDraw: isLuckDraw,
-                    isLuckDrawEnd: isLuckDrawEnd
+                    id: id
                 })
                 wx.hideLoading();
             }
@@ -647,7 +633,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: this.data.con,
-            path: '/pages/details/details?id=' + this.data.pid + "&&token=" + token
+            path: '/pages/banner/banner?id=' + this.data.pid + "&&token=" + token
         }
     }
 })

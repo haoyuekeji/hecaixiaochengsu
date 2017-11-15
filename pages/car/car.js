@@ -17,32 +17,67 @@ Page({
 
     //点击单个商品选中
     SeclectList: function (e) {
-        const index = e.target.dataset.index;
-        var cons_ = this.data.cons;
-        cons_[index].Seclect = !this.data.cons[index].Seclect;
-        this.setData({
-            cons: cons_
-        })
-        this.SeclectAll();
-        this.getPrice()
+        if (e.target.dataset.active !== true) {
+            wx.showModal({
+                title: '提示',
+                content: '该商品已下架，请删除该商品！',
+            })
+            return false
+        } else {
+            const index = e.target.dataset.index;
+            var cons_ = this.data.cons;
+            cons_[index].Seclect = !this.data.cons[index].Seclect;
+            this.setData({
+                cons: cons_
+            })
+            this.SeclectAll();
+            this.getPrice()
+
+        }
     },
 
     //点击全部商品选中
     SeclectAlllist: function (e) {
+        var k = 0;
+        var arr = []
         var cons = this.data.cons;
         var Seclect = this.data.SeclectAll;
         for (var i = 0; i < cons.length; i++) {
-            cons[i].Seclect = !Seclect
+            if (cons[i].active !== true) {
+                cons[i].Seclect = false
+                k++
+                arr.push(i + 1)
+            } else {
+                cons[i].Seclect = !Seclect
+            }
         }
+        if (k > 0) {
+            wx.showModal({
+                title: '提示',
+                content: '列表中第' + arr.join(',') + '件商品已下架，请删除该商品！',
+            })
+
+        }
+
         this.setData({
             SeclectAll: !Seclect,
             cons: cons
         })
         this.getPrice()
+
+
     },
 
     //点击减少件数
     NumJian: function (e) {
+        if (e.target.dataset.active !== true) {
+            wx.showModal({
+                title: '提示',
+                content: '该商品已下架，请删除该商品！',
+            })
+            return false
+        }
+
         wx.showLoading({
             title: '加载中',
             mask: true
@@ -101,6 +136,13 @@ Page({
 
     //点击增加件数
     NumJia: function (e) {
+        if (e.target.dataset.active !== true) {
+            wx.showModal({
+                title: '提示',
+                content: '该商品已下架，请删除该商品！',
+            })
+            return false
+        }
         wx.showLoading({
             title: '加载中',
             mask: true
@@ -189,14 +231,20 @@ Page({
     },
     //点击跳转订单确认页面
     buy: function () {
+        wx.showLoading({
+            title: '加载中',
+            mask: true
+        });
         const paylist = [];
         const cons = this.data.cons;
+        const openid = wx.getStorageSync('openid');
         for (let i = 0; i < cons.length; i++) {
             if (cons[i].Seclect === true) {
-                paylist.push({ pid: cons[i].id, productId: cons[i].productId, nums: cons[i].nums, dname: cons[i].dname })
+                paylist.push({ pid: cons[i].id, productId: cons[i].productId, nums: cons[i].nums, dname: cons[i].dname, id: cons[i].pid, isLuckDraw: cons[i].isLuckDraw })
             }
         }
         if (paylist.length === 0) {
+            wx.hideLoading()
             wx.showModal({
                 title: '提示',
                 content: '您还没有选择商品哦！',
@@ -209,6 +257,13 @@ Page({
     },
     //点击跳转详情页
     link: function (e) {
+        if (e.target.dataset.active !== true) {
+            wx.showModal({
+                title: '提示',
+                content: '该商品已下架，请删除该商品！',
+            })
+            return false
+        }
         const id = e.target.dataset.id;
         wx.navigateTo({
             url: '../details/details?id=' + id
@@ -310,7 +365,9 @@ Page({
                     let size = content[i].productses[0].produtsTypes[0].size;
                     let productcolor = content[i].productses[0].produtsTypes[0].color;
                     let dname = content[i].productses[0].dname;
-                    cons.push({ imgurl: imgurl, con: con, price: price, nums: nums, Seclect: Seclect, color: color, id: pid, pid: id, productId: productId, size: size, productcolor: productcolor, dname: dname })
+                    let active = content[i].productses[0].active;
+                    let isLuckDraw = content[i].productses[0].isLuckDraw;
+                    cons.push({ imgurl: imgurl, con: con, price: price, nums: nums, Seclect: Seclect, color: color, id: pid, pid: id, productId: productId, size: size, productcolor: productcolor, dname: dname, active: active, isLuckDraw: isLuckDraw })
                 }
                 that.setData({
                     cons: cons,

@@ -13,6 +13,19 @@ Page({
         duration: 1000,
         logo_stu: true
     },
+    banner: function (e) {
+        const that = this
+        const index = e.target.dataset.index
+        const banner_navlist = that.data.banner_nav.split(',')
+        if (banner_navlist[index] !== '') {
+            wx.navigateTo({
+                url: '../banner/banner?id=' + banner_navlist[index],
+            })
+        } else {
+            return false
+        }
+
+    },
     //事件处理函数
     reflash: function (pageSize) {
         wx.showLoading({
@@ -90,7 +103,6 @@ Page({
                 }
                 var monthSale = 0;
                 const imgUrls = res.data.data[0].split(',');
-                imgUrls.pop();
                 const video_src = res.data.data[1];
                 let content = res.data.data[2].content;
                 for (let k = content.length - 1; k >= 0; k--) {
@@ -122,7 +134,8 @@ Page({
                 that.setData({
                     imgUrls: imgUrls,
                     video_src: video_src,
-                    cons: cons
+                    cons: cons,
+                    banner_nav: res.data.data[3]
                 })
                 wx.hideLoading();
             },

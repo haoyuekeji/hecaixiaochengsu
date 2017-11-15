@@ -1,0 +1,23 @@
+<view class="container">
+    <view class='scroll'>
+        <view class='scroll-con'>
+            <view wx:if="{{cons}}">
+                <view class='scroll-con-details' wx:for="{{cons}}" wx:key="index" >
+                    <view class="img">
+                        <image src='{{item.imgurl}}' alt="hecaishangwu"></image>
+                    </view>
+                    <view class='cons'>
+                        <text>{{item.con}}</text>
+                        <view class='details'>
+                            <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
+                            <text>￥{{item.priceNew}}</text>
+                            <text id='luckcode' >{{item.luckcode}}</text>
+                            <view bindtap='copy' data-id="{{index}}">点击复制中奖号</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view wx:else>你还没有下单！</view>
+        </view>
+    </view>
+</view>
