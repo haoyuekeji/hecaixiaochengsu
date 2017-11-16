@@ -66,6 +66,10 @@ page {
     box-sizing: border-box;
 }
 
+.cjorder {
+    justify-content: flex-start;
+}
+
 .address image {
     height: 30rpx;
     width: 20rpx;

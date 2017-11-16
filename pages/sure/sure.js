@@ -157,10 +157,19 @@ Page({
                                                 wxname: wxname
                                             },
                                             success: function (res) {
-                                                orderlist.push({
-                                                    id: res.data.data.id,
-                                                    isLuckDraw: res.data.data.isLuckDraw
-                                                });
+                                                const stu = res.data.error
+                                                if (stu === true) {
+                                                    wx.showModal({
+                                                        title: '提示',
+                                                        content: res.data.message,
+                                                    })
+                                                } else {
+                                                    orderlist.push({
+                                                        id: res.data.data.id,
+                                                        isLuckDraw: res.data.data.isLuckDraw
+                                                    });
+                                                }
+
                                             },
                                             fail: function () {
 

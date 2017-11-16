@@ -19,9 +19,9 @@
         <text>地址</text>
         <image src="../../images/icon/come.png"></image>
     </view>
-    <view class="address" bindtap="cjorder">
-        <text>抽奖定单</text>
-        <image src="../../images/icon/come.png"></image>
+    <view class="address  cjorder">
+        <text>抽奖码：</text>
+        <text>{{luckcode}}</text>
     </view>
     <view class="scroll">
         <view class="scroll-con {{unindex===0?'index':''}} ">

@@ -11,7 +11,7 @@
                         <view class='details'>
                             <view>颜色:{{item.color}} 尺码：{{item.size}} 数量：{{item.amount}}</view>
                             <text>￥{{item.priceNew}}</text>
-                            <text id='luckcode' >{{item.luckcode}}</text>
+                            <text id='luckcode' >抽奖号码：{{item.luckcode}}</text>
                             <view bindtap='copy' data-id="{{index}}">点击复制中奖号</view>
                         </view>
                     </view>

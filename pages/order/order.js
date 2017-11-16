@@ -354,7 +354,6 @@ Page({
         const cons = [];
         const openid = wx.getStorageSync('openid');
         const getstatus = util.getstatus(0, localhost, openid, token, function (data) {
-
             for (let i = 0; i < data.length; i++) {
                 let imgurl = data[i].products[0].indexImages.split(",")[0];
                 let con = data[i].products[0].pname;
@@ -368,6 +367,27 @@ Page({
                 cons: cons
             })
         });
+
+        wx.request({
+            url: localhost + '/order/clist',
+            data: {
+                openId: openid,
+                luckdraw: true,
+                sellerId: token
+            },
+            success: function (res) {
+                const data = res.data.data;
+                let luckcode = '';
+                if (data.length >= 1) {
+                    for (let i = 0; i < data.length; i++) {
+                        luckcode = data[i].luckcode === null ? '暂无抽奖订单！' : data[i].luckcode;
+                    }
+                    that.setData({
+                        luckcode: luckcode
+                    })
+                }
+            }
+        })
     },
 
     /**

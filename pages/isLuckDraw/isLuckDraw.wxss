@@ -95,7 +95,7 @@
 
 #luckcode {
     margin-top: 15rpx;
-    font-size: 45rpx;
+    font-size: 25rpx;
     letter-spacing: 8rpx;
-    font-weight: bolder;
+    color: #000;
 }

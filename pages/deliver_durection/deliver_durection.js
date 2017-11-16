@@ -27,7 +27,7 @@ Page({
             success: function (res) {
                 const content = res.data.data;
                 const dname = content.dname;
-                if (dname !== null) {
+                if (dname !== null && dname !== '') {
                     wx.request({
                         url: localhost + '/deliver/getTemplate',
                         data: {
